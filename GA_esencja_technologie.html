@@ -1,0 +1,273 @@
+<title>Grupa Azoty: droga do 60%</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Układ: jedna kolumna, w środku pętla (schemat), pod nią 6 miejsc na technologię i 3 kroki. */
+:root {
+  --bg: #F4F6F3;
+  --surface: #FFFFFF;
+  --ink: #15201B;
+  --muted: #56655E;
+  --line: #CFD9D3;
+  --accent: #0E6A58;
+  --accent-soft: #DCEFE9;
+  --hub: #B86E0A;
+  --hub-soft: #FBEBD3;
+  --f-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --f-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F1513; --surface: #172019; --ink: #E5ECE8; --muted: #9BADA4; --line: #2B3832;
+    --accent: #53C3A9; --accent-soft: #173A31; --hub: #E7A845; --hub-soft: #3A2A10; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F1513; --surface: #172019; --ink: #E5ECE8; --muted: #9BADA4; --line: #2B3832;
+  --accent: #53C3A9; --accent-soft: #173A31; --hub: #E7A845; --hub-soft: #3A2A10; color-scheme: dark;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.5; }
+.wrap { max-width: 1040px; margin: 0 auto; padding-inline: 20px; padding-block: 40px 64px; display: grid; gap: 48px; }
+h1, h2 { font-family: var(--f-display); font-weight: 700; line-height: 1.05; text-wrap: balance; margin: 0; letter-spacing: .005em; }
+h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); }
+h2 { font-size: 1.9rem; }
+p { margin: 0; }
+.eyebrow { font-family: var(--f-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.lead { max-width: 64ch; color: var(--muted); font-size: 1.1rem; }
+header { display: grid; gap: 14px; }
+
+.goal { display: flex; flex-wrap: wrap; gap: 12px 28px; align-items: baseline; padding-block: 18px; border-block: 1px solid var(--line); }
+.goal div { display: grid; gap: 2px; min-width: 0; }
+.goal b { font-family: var(--f-display); font-size: 1.9rem; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--accent); }
+.goal span { font-size: .9rem; color: var(--muted); }
+
+.diagram { overflow-x: auto; }
+.diagram svg { display: block; width: 100%; min-width: 620px; height: auto; }
+.diagram text { font-family: var(--f-body); }
+.caption { color: var(--muted); font-size: .95rem; max-width: 70ch; margin-top: 10px; }
+
+section { display: grid; gap: 18px; }
+.spots { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 14px; }
+.spot { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 16px 18px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.spot h3 { margin: 0; font-family: var(--f-display); font-size: 1.35rem; font-weight: 600; }
+.tech { font-family: var(--f-mono); font-size: .8rem; color: var(--accent); }
+.spot dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; font-size: .95rem; }
+.spot dt { color: var(--muted); }
+.spot dd { margin: 0; }
+
+.hubnote { background: var(--hub-soft); border-radius: 6px; padding: 18px 20px; display: grid; gap: 8px; }
+.hubnote h3 { margin: 0; font-family: var(--f-display); font-size: 1.4rem; color: var(--hub); }
+.hubnote ul { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
+
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; counter-reset: s; }
+.step { border-top: 3px solid var(--accent); padding-top: 12px; display: grid; gap: 6px; align-content: start; }
+.step .when { font-family: var(--f-mono); font-size: .8rem; color: var(--muted); }
+.step h3 { margin: 0; font-family: var(--f-display); font-size: 1.4rem; }
+.step h3::before { counter-increment: s; content: counter(s) ". "; color: var(--accent); }
+
+.formula { font-family: var(--f-display); font-size: clamp(1.3rem, 3vw, 1.7rem); font-weight: 600; line-height: 1.3; }
+.formula em { font-style: normal; color: var(--accent); }
+.note { font-size: .85rem; color: var(--muted); max-width: 80ch; }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Grupa Azoty · Segment Nawozy · esencja do 2030</p>
+    <h1>Z 50% do 60% rynku: jedna pętla danych zamiast sześciu wysp</h1>
+    <p class="lead">Grupa ma już największe w Polsce moce, sieć dystrybucji, logistykę i SAP. Brakuje połączenia. Każdy obszar planuje sam, często w Excelu, i nie widzi, co dzieje się u rolnika. Technologia ma zamknąć jedną pętlę: od rolnika, przez plan i fabrykę, do dostawy i z powrotem.</p>
+  </header>
+
+  <div class="goal" aria-label="Cele udziału rynkowego">
+    <div><b>45% → 60%</b><span>AN/CAN w Polsce, +0,59 mld PLN/rok</span></div>
+    <div><b>42% → 60%</b><span>NPK w Polsce, +0,19 mld PLN/rok</span></div>
+    <div><b>713 tys. t</b><span>RSM w kraju w 2030</span></div>
+    <div><b>160 tys. t</b><span>Nowe Produkty (inhibitory, biostymulacja)</span></div>
+  </div>
+
+  <section>
+    <h2>Schemat działania</h2>
+    <div class="diagram">
+      <svg viewBox="0 0 820 620" role="img" aria-label="Pętla: rynek, oferta, plan, produkcja, magazyn, dostawa, wokół wspólnej bazy danych">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/>
+          </marker>
+          <marker id="arrh" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill="var(--hub)"/>
+          </marker>
+        </defs>
+
+        <!-- pętla przepływu (zgodnie z ruchem wskazówek) -->
+        <g fill="none" stroke="var(--accent)" stroke-width="2.5" marker-end="url(#arr)">
+          <path d="M500 95 Q600 105 625 160"/>
+          <path d="M680 250 L680 360"/>
+          <path d="M625 450 Q600 515 500 525"/>
+          <path d="M320 525 Q220 515 195 450"/>
+          <path d="M140 360 L140 250"/>
+          <path d="M195 160 Q220 105 320 95"/>
+        </g>
+
+        <!-- szprychy do bazy danych -->
+        <g fill="none" stroke="var(--hub)" stroke-width="1.6" stroke-dasharray="5 5" marker-end="url(#arrh)" marker-start="url(#arrh)">
+          <path d="M410 128 L410 212"/>
+          <path d="M595 225 L492 272"/>
+          <path d="M595 395 L492 348"/>
+          <path d="M410 492 L410 408"/>
+          <path d="M225 395 L328 348"/>
+          <path d="M225 225 L328 272"/>
+        </g>
+
+        <!-- centrum -->
+        <circle cx="410" cy="310" r="96" fill="var(--hub-soft)" stroke="var(--hub)" stroke-width="2"/>
+        <text x="410" y="285" text-anchor="middle" font-size="13" font-weight="700" fill="var(--hub)" letter-spacing="1">JEDNA BAZA</text>
+        <text x="410" y="303" text-anchor="middle" font-size="13" font-weight="700" fill="var(--hub)" letter-spacing="1">DANYCH</text>
+        <text x="410" y="326" text-anchor="middle" font-size="12" fill="var(--ink)">SAP + warstwa integracji</text>
+        <text x="410" y="343" text-anchor="middle" font-size="12" fill="var(--ink)">wspólne ID produktu,</text>
+        <text x="410" y="358" text-anchor="middle" font-size="12" fill="var(--ink)">klienta i lokalizacji</text>
+
+        <!-- węzły -->
+        <g font-size="15">
+          <g>
+            <rect x="320" y="60" width="180" height="68" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+            <text x="410" y="88" text-anchor="middle" font-weight="700" fill="var(--ink)">1 · Rolnik i AD</text>
+            <text x="410" y="110" text-anchor="middle" font-size="12" fill="var(--accent)">GAia · CRM · portal AD</text>
+          </g>
+          <g>
+            <rect x="590" y="160" width="180" height="68" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+            <text x="680" y="188" text-anchor="middle" font-weight="700" fill="var(--ink)">2 · Oferta i marża</text>
+            <text x="680" y="210" text-anchor="middle" font-size="12" fill="var(--accent)">SAP SD · CO-PA · BI</text>
+          </g>
+          <g>
+            <rect x="590" y="382" width="180" height="68" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+            <text x="680" y="410" text-anchor="middle" font-weight="700" fill="var(--ink)">3 · Jeden plan</text>
+            <text x="680" y="432" text-anchor="middle" font-size="12" fill="var(--accent)">S&amp;OP · IBP / APS</text>
+          </g>
+          <g>
+            <rect x="320" y="492" width="180" height="68" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+            <text x="410" y="520" text-anchor="middle" font-weight="700" fill="var(--ink)">4 · 4 zakłady</text>
+            <text x="410" y="542" text-anchor="middle" font-size="12" fill="var(--accent)">MES · PP-PI · PM · QM</text>
+          </g>
+          <g>
+            <rect x="50" y="382" width="180" height="68" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+            <text x="140" y="410" text-anchor="middle" font-weight="700" fill="var(--ink)">5 · Magazyn</text>
+            <text x="140" y="432" text-anchor="middle" font-size="12" fill="var(--accent)">WMS / EWM · skanery</text>
+          </g>
+          <g>
+            <rect x="50" y="160" width="180" height="68" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+            <text x="140" y="188" text-anchor="middle" font-weight="700" fill="var(--ink)">6 · Dostawa i gotówka</text>
+            <text x="140" y="210" text-anchor="middle" font-size="12" fill="var(--accent)">TMS · awizacja · Koltar</text>
+          </g>
+        </g>
+
+        <!-- etykiety na strzałkach -->
+        <g font-size="11.5" fill="var(--muted)" font-family="var(--f-mono)">
+          <text x="600" y="92">prawdziwy popyt</text>
+          <text x="692" y="310">opłacalny koszyk</text>
+          <text x="560" y="540">wykonalne zlecenie</text>
+          <text x="160" y="540">partia gotowa</text>
+          <text x="20" y="310">slot, auto, wagon</text>
+          <text x="120" y="92">odbiór, odmowy, sell-out</text>
+        </g>
+      </svg>
+    </div>
+    <p class="caption">Zielona pętla to przepływ pracy: każdy krok przekazuje dalej jedną konkretną informację. Przerywane linie to dane: każdy krok zapisuje i czyta z tej samej bazy, więc nikt nie przepisuje liczb z Excela do Excela. Powrót z dostawy do rolnika (odbiór, odmowy, sprzedaż AD do rolnika) jest tym, czego dziś najbardziej brakuje.</p>
+  </section>
+
+  <section>
+    <h2>Gdzie technologia, po co i jak to daje udział</h2>
+    <div class="spots">
+      <article class="spot">
+        <h3>1 · Rolnik i dystrybutor</h3>
+        <p class="tech">GAia · CRM · portal AD · Nawozy.eu</p>
+        <dl>
+          <dt>Problem</dt><dd>Widzimy zamówienia AD, nie widzimy rolnika. Zapas w kanale wygląda jak popyt.</dd>
+          <dt>Zmiana</dt><dd>Sell-out i stany AD, uprawy, region, przyczyny odmów. GAia doradza program nawożenia i kieruje koszyk do AD.</dd>
+          <dt>Udział</dt><dd>Odzyskani klienci i białe plamy. Sprzedaż wartości (megAN, RSMS, inhibitory), nie tylko tonażu.</dd>
+        </dl>
+      </article>
+      <article class="spot">
+        <h3>2 · Oferta, cena, marża</h3>
+        <p class="tech">SAP SD · CO-PA · BI</p>
+        <dl>
+          <dt>Problem</dt><dd>Kaskada rabatów (bonifikata, skonto, rabat roczny, przechowanie) ukrywa realną cenę netto.</dd>
+          <dt>Zmiana</dt><dd>Jeden rachunek: cena po upustach minus koszt zmienny, opakowanie i dostawa, per klient i SKU.</dd>
+          <dt>Udział</dt><dd>Agresywnie tam, gdzie się opłaca. Rabat jako narzędzie, nie nawyk.</dd>
+        </dl>
+      </article>
+      <article class="spot">
+        <h3>3 · Jeden plan Grupy</h3>
+        <p class="tech">S&amp;OP · SAP IBP lub APS</p>
+        <dl>
+          <dt>Problem</dt><dd>Plan produkcji w Excelach, każdy zakład osobno.</dd>
+          <dt>Zmiana</dt><dd>Miesiąc: popyt, podaż, wynik, gotówka. Tydzień: plan 13 tygodni. Termin dla klienta potwierdzany na realnej dostępności.</dd>
+          <dt>Udział</dt><dd>Mniej odmów w szczycie sezonu, gdy rolnik i tak kupi, tylko od kogoś innego.</dd>
+        </dl>
+      </article>
+      <article class="spot">
+        <h3>4 · Puławy, Police, Tarnów, Kędzierzyn</h3>
+        <p class="tech">MES · SAP PP-PI / PM / QM · dane z OT</p>
+        <dl>
+          <dt>Problem</dt><dd>Moce nominalne to nie dostępna podaż. Koszt gazu i energii na tonę słabo widoczny.</dd>
+          <dt>Zmiana</dt><dd>Gaz i energia na dobrą tonę, uzysk, przestoje. Wybór zakładu i decyzja: produkować NH3 czy kupić.</dd>
+          <dt>Udział</dt><dd>Niższy koszt tony to cena, która wygrywa z importem. Remonty poza sezonem.</dd>
+        </dl>
+      </article>
+      <article class="spot">
+        <h3>5 · Magazyn i pakowanie</h3>
+        <p class="tech">WMS / SAP EWM · skanery · automatyka</p>
+        <dl>
+          <dt>Problem</dt><dd>Przeciążeni magazynierzy, małe bufory (np. granulat BB to ok. doba produkcji).</dd>
+          <dt>Zmiana</dt><dd>Najpierw pomiar zadań, sloty i skanery. Roboty i przenośniki dopiero po policzeniu ROI.</dd>
+          <dt>Udział</dt><dd>Szybszy załadunek w szczycie, czyli więcej ton wydanych w oknie agrotechnicznym.</dd>
+        </dl>
+      </article>
+      <article class="spot">
+        <h3>6 · Dostawa i gotówka</h3>
+        <p class="tech">TMS / SAP TM · awizacja · wagi · Koltar</p>
+        <dl>
+          <dt>Problem</dt><dd>Kolejki aut, puste przebiegi, fracht awaryjny, zamrożony zapas i należności.</dd>
+          <dt>Zmiana</dt><dd>Wspólne awizacje aut i kolei, obieg cystern RSM, konsolidacja tras, usługi zewnętrzne poza sezonem Agro.</dd>
+          <dt>Udział</dt><dd>Towar u rolnika na czas. Uwolniona gotówka finansuje sezon i kontrakty z AD.</dd>
+        </dl>
+      </article>
+    </div>
+
+    <div class="hubnote">
+      <h3>Centrum: jak uporządkować tak dużą bazę danych</h3>
+      <ul>
+        <li>Jedna ścieżka zapisu dla każdej transakcji: zamówienie → zlecenie → partia → dostawa → faktura → wynik.</li>
+        <li>Wspólne słowniki: ten sam kod produktu, opakowania, klienta, lokalizacji i jednostki w 4 zakładach i w logistyce.</li>
+        <li>Najpierw inwentaryzacja: jakie moduły SAP są uruchomione, jakie interfejsy i licencje już są. Nowy system kupujemy dopiero, gdy wiadomo, czego brakuje.</li>
+        <li>Excel zostaje jako okno do danych, nie jako osobna baza.</li>
+        <li>Jeden rejestr korzyści z właścicielem i numerem zamówienia, żeby każda złotówka efektu była policzona raz.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Kolejność</h2>
+    <div class="steps">
+      <div class="step">
+        <span class="when">2026 / 2027</span>
+        <h3>Uporządkuj</h3>
+        <p>Spis systemów, danych i licencji. Wspólne słowniki i ID. Rachunek marży per klient i SKU. Uzgodnienie bazowych liczb udziału.</p>
+      </div>
+      <div class="step">
+        <span class="when">2027</span>
+        <h3>Połącz pętlę</h3>
+        <p>Pilot z kilkoma AD: stany, sprzedaż do rolnika i odmowy wchodzą do planu. Plan 13 tygodni w systemie zamiast w Excelu.</p>
+      </div>
+      <div class="step">
+        <span class="when">2028 – 2030</span>
+        <h3>Skaluj i automatyzuj</h3>
+        <p>GAia dla całej sieci, APS dla 4 zakładów, WMS i TMS w szczycie sezonu. Każdy etap przechodzi przez bramę CFO: efekt po kosztach.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="formula">Udział rośnie, gdy <em>wiemy, czego chce rolnik</em>, <em>mamy towar tam i wtedy</em>, gdy go kupuje, i <em>oferujemy cenę z kosztu</em>, który wygrywa z importem. Wszystkie trzy rzeczy zależą od tych samych danych.</p>
+    <p class="note">Źródła: Strategia Grupy Azoty 2030 (wersja wewnętrzna), Strategia Nawozowa z komentarzami, Mapa zintegrowanego systemu, Matryca wdrożenia. GAia to koncepcja, której status i budżet trzeba potwierdzić. Bazy celu NPK (42% lub 52%) i zakres stanu SAP wymagają uzgodnienia z kontrolingiem i IT.</p>
+  </section>
+</div>
