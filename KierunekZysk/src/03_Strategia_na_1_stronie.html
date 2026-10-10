@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><title>Kierunek Zysk — Strategia na 1 stronie</title><link rel="stylesheet" href="style.css">
+<style>
+  body{ font-size:8.6pt; }
+  .sheet{ page:land; width:277mm; height:190mm; display:grid; grid-template-rows:auto 1fr auto; gap:3mm; break-after:page; }
+  .sheet:last-child{ break-after:auto; }
+  .top{ display:flex; justify-content:space-between; align-items:center; background:var(--navy); color:#fff; border-radius:10px; padding:3.5mm 6mm; }
+  .top h1{ color:#fff; font-size:17pt; margin:0; }
+  .top .r{ font-size:8.5pt; text-align:right; line-height:1.6; }
+  .top .r span{ display:inline-block; border-bottom:1px solid rgba(255,255,255,.6); min-width:45mm; }
+  .canvas{ display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:1fr 1fr 1fr; gap:3mm; }
+  .cell{ border:1.6px solid var(--navy); border-radius:10px; padding:2.6mm 3.4mm; position:relative; background:#fff; overflow:hidden; }
+  .cell h4{ margin:0 0 .6mm; font-size:9.2pt; display:flex; gap:2mm; align-items:center; }
+  .cell h4 i{ font-style:normal; display:inline-flex; width:5.2mm; height:5.2mm; border-radius:50%; background:var(--navy); color:#fff; font-size:7.5pt; align-items:center; justify-content:center; flex:none; }
+  .cell p{ font-size:7.6pt; color:var(--muted); margin:0; line-height:1.35; }
+  .cell.accent{ background:var(--navy); }
+  .cell.accent h4,.cell.accent p{ color:#fff; }
+  .cell.accent h4 i{ background:var(--orange); color:var(--navy); }
+  .cell.soft{ background:#F5F6FA; }
+  .wide{ grid-column:span 2; }
+  .bottom{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:3mm; }
+  .bottom .cell{ min-height:24mm; }
+  .ex .cell p.v{ color:var(--ink); font-size:7.9pt; margin-top:1mm; }
+  .ex .cell.accent p.v{ color:#fff; }
+</style></head>
+<body class="navy-theme">
+
+<!-- PUSTA KANWA -->
+<div class="sheet">
+  <div class="top">
+    <div><div style="font-size:8pt;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);font-weight:700">Kierunek Zysk · materiał 3</div><h1>Strategia na 1 stronie</h1></div>
+    <div class="r">Firma: <span></span><br>Okres: <span></span> &nbsp; Wersja: <span style="min-width:15mm"></span></div>
+  </div>
+  <div class="canvas">
+    <div class="cell accent wide"><h4><i>★</i>Cel na 12 miesięcy (liczbowo)</h4><p>Przychód, marża netto, liczba stałych klientów. Np. „Marża netto 15%, 60% przychodu z abonamentów”.</p></div>
+    <div class="cell"><h4><i>1</i>Gdzie jesteśmy dziś</h4><p>3 kluczowe liczby z diagnozy i 3 największe wycieki zysku (moduł 1).</p></div>
+    <div class="cell"><h4><i>2</i>Idealny klient / segment</h4><p>Komu sprzedajemy w pierwszej kolejności i jaki jest wyzwalacz zakupu (moduł 2).</p></div>
+
+    <div class="cell"><h4><i>3</i>Usługa flagowa</h4><p>Od czego zaczyna się dobra współpraca (moduł 2).</p></div>
+    <div class="cell"><h4><i>4</i>Zdanie wartości</h4><p>Dlaczego wybiorą nas, a nie konkurencję (moduł 3).</p></div>
+    <div class="cell"><h4><i>5</i>Ceny i pakiety</h4><p>Pakiety, minimalne zlecenie, plan podwyżki, abonament (moduł 4).</p></div>
+    <div class="cell"><h4><i>6</i>Źródła klientów</h4><p>1 sprawdzone, które wzmacniamy, i 1 nowe do testu (moduł 5).</p></div>
+
+    <div class="cell soft"><h4><i>7</i>Czego przestajemy</h4><p>Klienci, usługi, kanały i nawyki, z których rezygnujemy.</p></div>
+    <div class="cell"><h4><i>8</i>Horyzonty 70 / 20 / 10</h4><p>H1 rdzeń · H2 rozwój · H3 eksperymenty (moduł 6).</p></div>
+    <div class="cell accent wide"><h4><i>9</i>3 priorytety na 90 dni</h4><p>Cel · mierzalny wynik · osoba odpowiedzialna · termin (moduł 7).</p></div>
+  </div>
+  <div class="bottom">
+    <div class="cell"><h4><i>T</i>Test sprzedażowy</h4><p>Hipoteza · miernik · próg sukcesu · termin.</p></div>
+    <div class="cell"><h4><i>#</i>Tablica wyników (co tydzień)</h4><p>Zapytania · oferty (zł) · wygrane (zł) · godziny · stan konta.</p></div>
+    <div class="cell"><h4><i>R</i>Ryzyka i jak je ograniczymy</h4><p>Co może pójść nie tak i co wtedy robimy.</p></div>
+  </div>
+</div>
+
+<!-- PRZYKŁAD -->
+<div class="sheet ex">
+  <div class="top">
+    <div><div style="font-size:8pt;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);font-weight:700">Przykład wypełnienia (fikcyjny)</div><h1>Studio Lumen · Strategia na 1 stronie</h1></div>
+    <div class="r">6 osób · przychód 1,2 mln zł<br>Okres: I–XII · Wersja 1</div>
+  </div>
+  <div class="canvas">
+    <div class="cell accent wide"><h4><i>★</i>Cel na 12 miesięcy</h4><p class="v">Marża netto z 8% do 18% (ok. 230 tys. zł zysku) · 40% przychodu z abonamentów · właścicielka domyka maks. 40% sprzedaży.</p></div>
+    <div class="cell"><h4><i>1</i>Gdzie jesteśmy dziś</h4><p class="v">Marża 8% · 41% przychodu od 3 klientów · ceny bez zmian od 2,5 roku · poprawki bez limitu · 90% sprzedaży robi właścicielka.</p></div>
+    <div class="cell"><h4><i>2</i>Segment</h4><p class="v">Prywatne kliniki i gabinety (2–30 osób). Wyzwalacz: otwarcie, nowy lekarz, rebranding, pusty grafik.</p></div>
+    <div class="cell"><h4><i>3</i>Usługa flagowa</h4><p class="v">Pakiet „Gotowi na pacjentów” w 21 dni.</p></div>
+    <div class="cell"><h4><i>4</i>Zdanie wartości</h4><p class="v">Pełny grafik pacjentów dzięki gotowemu pakietowi w 21 dni, bez tygodni spotkań.</p></div>
+    <div class="cell"><h4><i>5</i>Ceny i pakiety</h4><p class="v">9 900 / 16 900 / 16 900 + 2 900 zł/mies. · minimum 4 000 zł · 2 rundy poprawek · +10% od 1.03.</p></div>
+    <div class="cell"><h4><i>6</i>Źródła klientów</h4><p class="v">Wzmacniamy: polecenia (system 4 kroków). Test: partnerstwo z 2 biurami rachunkowymi medycznymi.</p></div>
+    <div class="cell soft"><h4><i>7</i>Czego przestajemy</h4><p class="v">Przetargi · „ulotka na jutro” · zlecenia poniżej 4 000 zł · darmowe koncepcje do ofert.</p></div>
+    <div class="cell"><h4><i>8</i>70 / 20 / 10</h4><p class="v">H1: ceny, standard pakietu · H2: abonament · H3: szablony stron dla gabinetów.</p></div>
+    <div class="cell accent wide"><h4><i>9</i>3 priorytety na 90 dni</h4><p class="v">1. Cennik i pakiety, podwyżka 10% (właścicielka, do 1.03) · 2. Abonament: 5 klientów (właścicielka + PM, do 31.03) · 3. Standard sprzedaży: skrypty, CRM, follow-up, PM prowadzi 50% rozmów (PM, do 31.03).</p></div>
+  </div>
+  <div class="bottom">
+    <div class="cell"><h4><i>T</i>Test sprzedażowy</h4><p class="v">12 rozmów z obecnymi klientami o abonamencie → próg: 3 umowy w 3 tygodnie.</p></div>
+    <div class="cell"><h4><i>#</i>Tablica wyników</h4><p class="v">Zapytania ≥ 12/mies. · oferty ≥ 80 tys. zł/mies. · skuteczność ≥ 35% · godziny ±10% planu.</p></div>
+    <div class="cell"><h4><i>R</i>Ryzyka</h4><p class="v">Odejście dużego klienta po podwyżce → wcześniej 2 nowe zlecenia z segmentu medycznego; rezerwa 2 miesiące kosztów.</p></div>
+  </div>
+</div>
+
+</body></html>
