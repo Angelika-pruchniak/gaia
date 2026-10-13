@@ -7,6 +7,8 @@ const files = [
   ['04_Planer_90_dni.html', '4_Planer_90_dni.pdf'],
   ['05_Skrypty_sprzedazowe.html', '5_Skrypty_i_szablony_sprzedazowe.pdf'],
   ['06_Audyt_i_bank_testow.html', '6_Audyt_i_bank_40_testow.pdf'],
+  ['07_Dziennik_decyzji.html', '7_Dziennik_decyzji_i_konsultacja.pdf'],
+  ['08_Pakiet_prowadzacej_konsultacje.html', '../Dla_prowadzacej/Pakiet_prowadzacej_konsultacje.pdf'],
 ];
 (async () => {
   const browser = await chromium.launch({ executablePath: process.env.CHROMIUM || undefined });

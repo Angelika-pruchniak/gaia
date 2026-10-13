@@ -54,6 +54,7 @@ rows=[('Jak korzystać',''),
 ('5. Lejek','Ile zapytań, rozmów i ofert potrzebujesz, żeby osiągnąć cel przychodu. Moduł 5.'),
 ('6. Dźwignie wzrostu','Efekt poprawy 5 dźwigni (klienci, wartość, częstotliwość, długość, marża) na przychód i zysk.'),
 ('7. Próg rentowności','Minimalny przychód miesięczny i przychód potrzebny do zysku docelowego.'),
+('8. Podsumowanie','Najważniejsze liczby i diagnoza na jednym ekranie. Wyślij ten arkusz przed konsultacją Przegląd Decyzji.'),
 ('',''),
 ('Kolory','Brzoskwiniowe pola = wpisujesz. Białe pola = liczą się same (nie nadpisuj formuł).'),
 ('Dane','Wystarczą przybliżenia z faktur i kalendarza z ostatnich 12 miesięcy. Kwoty netto.'),
@@ -64,9 +65,9 @@ for i,(a,b) in enumerate(rows):
     ws.row_dimensions[r].height=30 if b else 20
     if i in (1,3,5,7): 
         ws.cell(row=r,column=2).fill=F(BLUSH); c.fill=F(BLUSH)
-    elif 1<=i<=7:
+    elif 1<=i<=8:
         ws.cell(row=r,column=2).fill=F(CREAM); c.fill=F(CREAM)
-ws.cell(row=14,column=2).fill=F(PEACH)
+ws.cell(row=15,column=2).fill=F(PEACH)
 
 # ---------------- USTAWIENIA ----------------
 ws=wb.create_sheet('Ustawienia')
@@ -235,6 +236,41 @@ label(ws,'B11','Przychód potrzebny do zysku docelowego',True); ws['C11']='=IFER
 label(ws,'B12','Średnia wartość zlecenia'); inp(ws.cell(row=12,column=3,value=9500),PLN)
 label(ws,'B13','Zleceń miesięcznie do zysku docelowego'); ws['C13']='=IFERROR(C11/C12,0)'; out(ws['C13'],'0.0')
 for c in 'BC': ws[f'{c}10'].fill=F(PEACH); ws[f'{c}11'].fill=F(ORANGE)
+
+
+# ---------------- PODSUMOWANIE ----------------
+ws=wb.create_sheet('Podsumowanie')
+title(ws,'Podsumowanie: moja firma w liczbach','Liczy się samo z pozostałych arkuszy. Wyślij przed konsultacją Przegląd Decyzji.',5)
+ws.column_dimensions['B'].width=48; ws.column_dimensions['C'].width=20; ws.column_dimensions['D'].width=18; ws.column_dimensions['E'].width=44
+header(ws,5,['Wskaźnik','Wartość','Sygnał','Co to znaczy'])
+rows=[
+ ('Pełny koszt godziny pracy','=Ustawienia!C12',PLN2,'=""',''),
+ ('Marża na klientach (z arkusza Klienci)','=Klienci!H32',PCT,'=IF(C7<0.15,"⚠ niska",IF(C7<0.3,"• średnia","✓ zdrowa"))','Poniżej 15%: pracujecie „na obrót”'),
+ ('Udział 3 największych klientów','=Klienci!E34',PCT,'=IF(C8>0.4,"⚠ ryzyko","✓ OK")','Powyżej 40% = ryzyko koncentracji'),
+ ('Klienci „Do pożegnania / wyceny” (liczba)','=COUNTIF(Klienci!K7:K31,"*pożegnania*")',INT,'=IF(C9>0,"⚠ do decyzji","✓ OK")','Kandydaci do nowej wyceny lub rozstania'),
+ ('Klienci „Gwiazdy” (liczba)','=COUNTIF(Klienci!K7:K31,"⭐*")',INT,'=""','Wzór idealnego klienta'),
+ ('Najlepsza usługa (zysk na godzinę)','=IFERROR(INDEX(Usługi!B7:B18,MATCH(1,Usługi!M7:M18,0)),"")',None,'=""','Kandydat na usługę flagową'),
+ ('Usługi ze stratą (liczba)','=COUNTIF(Usługi!I7:I18,"<0")',INT,'=IF(C12>0,"⚠ do decyzji","✓ OK")','Podnieś cenę, zmień zakres albo wycofaj'),
+ ('Zysk po planowanej podwyżce','=\'Podwyżka cen\'!C14',PLN,'=IF(\'Podwyżka cen\'!C15>0,"✓ +"&TEXT(\'Podwyżka cen\'!C16,"0%"),"⚠ spadek")','Arkusz Podwyżka cen'),
+ ('Dopuszczalna utrata sprzedaży po podwyżce','=\'Podwyżka cen\'!C17',PCT,'=""','Bufor bezpieczeństwa decyzji o cenach'),
+ ('Potrzebne zapytania / mies. (cel)','=Lejek!D16','0.0','=""','Arkusz Lejek'),
+ ('Przychód potrzebny do zysku docelowego / mies.','=\'Próg rentowności\'!C11',PLN,'=""','Arkusz Próg rentowności'),
+]
+for i,(l,f,fmt,sig,note) in enumerate(rows):
+    r=6+i; label(ws,f'B{r}',l); ws[f'C{r}']=f; out(ws[f'C{r}'],fmt,True); ws[f'D{r}']=sig; out(ws[f'D{r}'],None,True)
+    ws[f'E{r}']=note; ws[f'E{r}'].font=Font(size=9,italic=True,color=GREY); ws[f'E{r}'].border=B
+    if i%2: 
+        for c in 'BCDE': ws[f'{c}{r}'].fill=F(CREAM)
+ws.conditional_formatting.add('D6:D16',FormulaRule(formula=['LEFT(D6,1)="⚠"'],fill=F(PINK)))
+ws.conditional_formatting.add('D6:D16',FormulaRule(formula=['LEFT(D6,1)="✓"'],fill=F(PEACH)))
+label(ws,'B18','Moje 3 najważniejsze decyzje (z Dziennika decyzji)',True)
+for k in range(3):
+    r=19+k; ws[f'B{r}']=f'{k+1}.'; ws[f'B{r}'].font=Font(bold=True,color=NAVY)
+    ws.merge_cells(f'C{r}:E{r}'); inp(ws[f'C{r}']); ws.row_dimensions[r].height=28
+label(ws,'B23','Decyzja, co do której mam najmniej pewności',True); ws.merge_cells('C23:E23'); inp(ws['C23']); ws.row_dimensions[23].height=40
+ws.merge_cells('B25:E27')
+ws['B25']='NASTĘPNY KROK · Przegląd Decyzji (3 000 zł netto, cena pakietu odliczana). Przed spotkaniem analizuję Twoje liczby i tok rozumowania z Dziennika decyzji, a na 2-godzinnej sesji wzmacniamy najsłabsze ogniwa planu. Umów termin: guliwera4.pl/konsultacja'
+ws['B25'].font=Font(bold=True,color='FFFFFF'); ws['B25'].fill=F(NAVY); ws['B25'].alignment=Alignment(wrap_text=True,vertical='center',indent=1)
 
 for s in wb.worksheets:
     s.sheet_properties.tabColor = {'Start':NAVY,'Ustawienia':NAVY}.get(s.title, ORANGE if wb.worksheets.index(s)%2 else PINK)

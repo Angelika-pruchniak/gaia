@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><title>Kierunek Zysk — Dziennik decyzji</title><link rel="stylesheet" href="style.css">
+<style>
+  .card-head{ display:flex; justify-content:space-between; align-items:flex-end; border-bottom:3px solid var(--orange); padding-bottom:2mm; margin-bottom:3mm; }
+  .card-head h2{ margin:0; font-size:16pt; }
+  .card-head span{ font-size:8.5pt; color:var(--muted); }
+  .dc{ display:grid; grid-template-columns:1fr 1fr; gap:2.6mm; }
+  .dc .field{ margin:0; min-height:23mm; padding:2.2mm 3.2mm; }
+  .dc .field small{ display:block; font-size:7.8pt; line-height:1.3; }
+  .dc .full{ grid-column:span 2; }
+  .dc .tall{ min-height:40mm; }
+  .score{ display:grid; grid-template-columns:repeat(6,1fr); gap:2mm; margin-top:3mm; }
+  .score div{ border-radius:8px; background:var(--blush); padding:2mm; text-align:center; font-size:7.6pt; font-weight:600; color:var(--navy); }
+  .score div b{ display:block; font-size:9pt; letter-spacing:.2em; margin-top:1mm; color:var(--muted); font-weight:500; }
+  .score div:nth-child(odd){ background:var(--peach); }
+  .chain{ display:grid; grid-template-columns:repeat(6,1fr); gap:2.5mm; margin:4mm 0; }
+  .chain .l{ border-radius:12px; padding:3.5mm; background:var(--grad-soft); border-top:5px solid var(--orange); font-size:8.6pt; }
+  .chain .l:nth-child(even){ border-top-color:var(--pink); }
+  .chain .l b{ display:block; color:var(--navy); font-size:9.4pt; margin-bottom:1mm; }
+  .flow{ display:grid; grid-template-columns:repeat(5,1fr); gap:2.5mm; margin:4mm 0; }
+  .flow .s{ border-radius:12px; padding:2.5mm 3mm; background:#fff; border:1.5px solid var(--line); font-size:8.6pt; position:relative; }
+  .flow .s .n{ display:inline-flex; width:7mm; height:7mm; border-radius:50%; background:var(--navy); color:#fff; font-weight:700; align-items:center; justify-content:center; margin-bottom:2mm; }
+  .price{ background:var(--navy); color:#fff; border-radius:16px; padding:4.5mm 6mm; display:grid; grid-template-columns:1.3fr 1fr; gap:6mm; align-items:center; break-inside:avoid; }
+  .price .amount{ font-size:24pt; font-weight:800; color:var(--orange); line-height:1; }
+  .price strong{ color:var(--pink); }
+  .price .cta{ background:var(--grad); color:var(--navy); border-radius:12px; padding:4mm 5mm; font-weight:700; text-align:center; font-size:11pt; }
+</style></head>
+<body>
+
+<section class="cover">
+  <div class="brand"><span></span>Kierunek Zysk</div>
+  <div class="mid">
+    <div class="kicker">Materiał 7 · Dziennik decyzji + przygotowanie do konsultacji</div>
+    <h1>Zapisz nie tylko <em style="font-style:normal;text-decoration:underline;text-decoration-color:#fff;text-underline-offset:6px">co</em> postanowiłeś. Zapisz, <em style="font-style:normal;text-decoration:underline;text-decoration-color:#fff;text-underline-offset:6px">dlaczego</em>.</h1>
+    <div class="sub">Pięć kart najważniejszych decyzji z 30 dni pracy. Z nimi przychodzisz na Przegląd Decyzji: konsultację, na której razem sprawdzamy Twój tok rozumowania, zanim zainwestujesz w plan czas i pieniądze.</div>
+  </div>
+  <div class="foot"><span>guliwera4.pl</span><span>Wypełniaj na bieżąco, po każdym module</span></div>
+</section>
+
+<section>
+  <h2>Dlaczego dziennik decyzji</h2>
+  <p class="quote">Dobry wynik nie dowodzi, że decyzja była dobra, i na odwrót. Właściciel, który zobaczy, <em>jak</em> podejmuje decyzje, poprawia nie jedną decyzję, ale wszystkie kolejne.</p>
+  <p>Po 30 dniach z Kierunkiem Zysk masz kilka ważnych decyzji: na kim się skupiasz, jakie są nowe ceny, skąd mają przychodzić klienci i co testujesz. Każda z nich opiera się na założeniach. Część z nich jest trafna, a część to nawyki, obawy albo „tak się zawsze robiło”. Dziennik decyzji wydobywa te założenia na papier, żeby można je było sprawdzić: samodzielnie albo ze mną.</p>
+
+  <h3>Sześć ogniw dobrej decyzji</h3>
+  <p>Decyzja jest tak mocna jak jej najsłabsze ogniwo. Ten model (<em>Decision Quality</em>) stosuje się w dużych firmach przy decyzjach inwestycyjnych. Tutaj jest uproszczony do realiów małej firmy.</p>
+  <div class="chain">
+    <div class="l"><b>1. Rama</b>Czy rozwiązuję właściwy problem? Co jest w zakresie, a co poza nim?</div>
+    <div class="l"><b>2. Opcje</b>Czy porównałem/am co najmniej 3 realne możliwości, w tym „nic nie zmieniać”?</div>
+    <div class="l"><b>3. Informacje</b>Na jakich danych się opieram? Czego nie wiem?</div>
+    <div class="l"><b>4. Kryteria</b>Co jest dla mnie ważne i z czego świadomie rezygnuję?</div>
+    <div class="l"><b>5. Rozumowanie</b>Czy wybór logicznie wynika z danych i kryteriów?</div>
+    <div class="l"><b>6. Zobowiązanie</b>Kto, co i kiedy zrobi? Po czym poznam, że trzeba zmienić kurs?</div>
+  </div>
+
+  <h3>Jak korzystać</h3>
+  <ol class="steps">
+    <li><strong>Po modułach 2, 4, 5 i 7</strong> wypełnij odpowiednią kartę (oznaczenia na kartach). Piąta karta jest na Twoją własną, najtrudniejszą decyzję.</li>
+    <li><strong>Pisz tak, jak myślisz</strong>, a nie tak, jak „powinno się”. Wątpliwości są najcenniejszym materiałem.</li>
+    <li><strong>Oceń każde ogniwo od 1 do 5.</strong> Najniższa ocena pokazuje, gdzie decyzja jest najsłabsza.</li>
+    <li><strong>Zrób autotest pułapek myślenia</strong> (str. 8).</li>
+    <li><strong>Umów Przegląd Decyzji</strong> i wyślij kartę przygotowania do konsultacji (str. 10) wraz z materiałami.</li>
+  </ol>
+</section>
+
+<!-- KARTA (x5) -->
+<section class="brk">
+  <div class="card-head"><h2>Decyzja 1 · Gdzie grać</h2><span>po module 2 · segment i usługa flagowa</span></div>
+  <div class="dc">
+    <div class="field full"><div class="q">Decyzja w jednym zdaniu</div></div>
+    <div class="field"><div class="q">1 · Rama: jaki problem rozwiązuje</div><small>Co się stanie, jeśli tej decyzji nie podejmę?</small></div>
+    <div class="field"><div class="q">2 · Rozważone opcje (min. 3)</div><small>A: … B: … C: nic nie zmieniać</small></div>
+    <div class="field"><div class="q">3 · Dane, na których się opieram</div><small>Liczby z kalkulatora, rozmowy z klientami</small></div>
+    <div class="field"><div class="q">… i czego nie wiem</div><small>Brakujące dane, szacunki „na oko”</small></div>
+    <div class="field"><div class="q">4 · Kryteria wyboru</div><small>Co jest najważniejsze? Ułóż od najważniejszego</small></div>
+    <div class="field"><div class="q">… z czego świadomie rezygnuję</div></div>
+    <div class="field full tall"><div class="q">5 · Mój tok rozumowania</div><small>„Wybieram …, ponieważ … Zakładam, że … Dlatego …”</small></div>
+    <div class="field"><div class="q">Kluczowe założenia do sprawdzenia</div><small>Jak i do kiedy je sprawdzę?</small></div>
+    <div class="field"><div class="q">Pre-mortem</div><small>Jest za 90 dni, a decyzja okazała się błędem. Co poszło nie tak?</small></div>
+    <div class="field"><div class="q">6 · Pierwszy krok, kto, kiedy</div></div>
+    <div class="field"><div class="q">Sygnał, że zmieniam zdanie</div><small>Jaki wynik / fakt sprawi, że wycofam lub zmienię decyzję?</small></div>
+  </div>
+  <div class="score"><div>Rama<b>1 2 3 4 5</b></div><div>Opcje<b>1 2 3 4 5</b></div><div>Informacje<b>1 2 3 4 5</b></div><div>Kryteria<b>1 2 3 4 5</b></div><div>Rozumowanie<b>1 2 3 4 5</b></div><div>Zobowiązanie<b>1 2 3 4 5</b></div></div>
+  <p style="margin-top:2mm;font-size:8.6pt"><strong>Pewność, że to dobra decyzja:</strong> ______ % &nbsp;&nbsp;·&nbsp;&nbsp; <strong>Data:</strong> ____________</p>
+</section>
+
+<section class="brk">
+  <div class="card-head"><h2>Decyzja 2 · Ceny i pakiety</h2><span>po module 4 · nowy cennik, podwyżka, minimalne zlecenie</span></div>
+  <div class="dc">
+    <div class="field full"><div class="q">Decyzja w jednym zdaniu</div></div>
+    <div class="field"><div class="q">1 · Rama: jaki problem rozwiązuje</div><small>Co się stanie, jeśli tej decyzji nie podejmę?</small></div>
+    <div class="field"><div class="q">2 · Rozważone opcje (min. 3)</div><small>Np. +5%, +10%, pakiety bez podwyżki, nic nie zmieniać</small></div>
+    <div class="field"><div class="q">3 · Dane, na których się opieram</div><small>Arkusz „Podwyżka cen”, marża na pokrycie, reakcje klientów</small></div>
+    <div class="field"><div class="q">… i czego nie wiem</div></div>
+    <div class="field"><div class="q">4 · Kryteria wyboru</div></div>
+    <div class="field"><div class="q">… z czego świadomie rezygnuję</div><small>Np. „akceptuję utratę klienta X”</small></div>
+    <div class="field full tall"><div class="q">5 · Mój tok rozumowania</div><small>„Wybieram …, ponieważ … Zakładam, że … Dlatego …”. Skąd wzięła się ta konkretna liczba?</small></div>
+    <div class="field"><div class="q">Kluczowe założenia do sprawdzenia</div></div>
+    <div class="field"><div class="q">Pre-mortem</div><small>Jest za 90 dni, a decyzja okazała się błędem. Co poszło nie tak?</small></div>
+    <div class="field"><div class="q">6 · Pierwszy krok, kto, kiedy</div></div>
+    <div class="field"><div class="q">Sygnał, że zmieniam zdanie</div></div>
+  </div>
+  <div class="score"><div>Rama<b>1 2 3 4 5</b></div><div>Opcje<b>1 2 3 4 5</b></div><div>Informacje<b>1 2 3 4 5</b></div><div>Kryteria<b>1 2 3 4 5</b></div><div>Rozumowanie<b>1 2 3 4 5</b></div><div>Zobowiązanie<b>1 2 3 4 5</b></div></div>
+  <p style="margin-top:2mm;font-size:8.6pt"><strong>Pewność, że to dobra decyzja:</strong> ______ % &nbsp;&nbsp;·&nbsp;&nbsp; <strong>Data:</strong> ____________</p>
+</section>
+
+<section class="brk">
+  <div class="card-head"><h2>Decyzja 3 · Źródła klientów i sprzedaż</h2><span>po module 5 · kanały, standard sprzedaży</span></div>
+  <div class="dc">
+    <div class="field full"><div class="q">Decyzja w jednym zdaniu</div></div>
+    <div class="field"><div class="q">1 · Rama: jaki problem rozwiązuje</div><small>Za mało zapytań, niska skuteczność ofert, mała wartość zleceń?</small></div>
+    <div class="field"><div class="q">2 · Rozważone opcje (min. 3)</div></div>
+    <div class="field"><div class="q">3 · Dane, na których się opieram</div><small>Arkusz „Lejek”, skąd przyszli najlepsi klienci</small></div>
+    <div class="field"><div class="q">… i czego nie wiem</div></div>
+    <div class="field"><div class="q">4 · Kryteria wyboru</div></div>
+    <div class="field"><div class="q">… z czego świadomie rezygnuję</div></div>
+    <div class="field full tall"><div class="q">5 · Mój tok rozumowania</div><small>„Wybieram …, ponieważ … Zakładam, że … Dlatego …”</small></div>
+    <div class="field"><div class="q">Kluczowe założenia do sprawdzenia</div></div>
+    <div class="field"><div class="q">Pre-mortem</div><small>Jest za 90 dni, a decyzja okazała się błędem. Co poszło nie tak?</small></div>
+    <div class="field"><div class="q">6 · Pierwszy krok, kto, kiedy</div></div>
+    <div class="field"><div class="q">Sygnał, że zmieniam zdanie</div></div>
+  </div>
+  <div class="score"><div>Rama<b>1 2 3 4 5</b></div><div>Opcje<b>1 2 3 4 5</b></div><div>Informacje<b>1 2 3 4 5</b></div><div>Kryteria<b>1 2 3 4 5</b></div><div>Rozumowanie<b>1 2 3 4 5</b></div><div>Zobowiązanie<b>1 2 3 4 5</b></div></div>
+  <p style="margin-top:2mm;font-size:8.6pt"><strong>Pewność, że to dobra decyzja:</strong> ______ % &nbsp;&nbsp;·&nbsp;&nbsp; <strong>Data:</strong> ____________</p>
+</section>
+
+<section class="brk">
+  <div class="card-head"><h2>Decyzja 4 · Trzy priorytety i test</h2><span>po module 7 · plan 90 dni</span></div>
+  <div class="dc">
+    <div class="field full"><div class="q">Decyzja w jednym zdaniu</div><small>Moje 3 priorytety to … a pierwszy test to …</small></div>
+    <div class="field"><div class="q">1 · Rama: jaki problem rozwiązuje</div></div>
+    <div class="field"><div class="q">2 · Co odrzuciłem/am z listy pomysłów</div><small>I dlaczego właśnie to</small></div>
+    <div class="field"><div class="q">3 · Dane, na których się opieram</div></div>
+    <div class="field"><div class="q">… i czego nie wiem</div></div>
+    <div class="field"><div class="q">4 · Kryteria wyboru</div><small>Wpływ na zysk, łatwość, czas, ryzyko</small></div>
+    <div class="field"><div class="q">… z czego świadomie rezygnuję</div></div>
+    <div class="field full tall"><div class="q">5 · Mój tok rozumowania</div><small>„Wybieram …, ponieważ … Zakładam, że … Dlatego …”</small></div>
+    <div class="field"><div class="q">Hipoteza testu i próg sukcesu</div></div>
+    <div class="field"><div class="q">Pre-mortem</div><small>Jest za 90 dni, a plan się nie udał. Co poszło nie tak?</small></div>
+    <div class="field"><div class="q">6 · Kto, co, kiedy</div></div>
+    <div class="field"><div class="q">Sygnał, że zmieniam zdanie</div></div>
+  </div>
+  <div class="score"><div>Rama<b>1 2 3 4 5</b></div><div>Opcje<b>1 2 3 4 5</b></div><div>Informacje<b>1 2 3 4 5</b></div><div>Kryteria<b>1 2 3 4 5</b></div><div>Rozumowanie<b>1 2 3 4 5</b></div><div>Zobowiązanie<b>1 2 3 4 5</b></div></div>
+  <p style="margin-top:2mm;font-size:8.6pt"><strong>Pewność, że to dobra decyzja:</strong> ______ % &nbsp;&nbsp;·&nbsp;&nbsp; <strong>Data:</strong> ____________</p>
+</section>
+
+<section class="brk">
+  <div class="card-head"><h2>Decyzja 5 · Moja najtrudniejsza decyzja</h2><span>dowolna: zatrudnienie, rozstanie z klientem, inwestycja, nowa usługa…</span></div>
+  <div class="dc">
+    <div class="field full"><div class="q">Decyzja w jednym zdaniu</div></div>
+    <div class="field"><div class="q">1 · Rama: jaki problem rozwiązuje</div><small>Dlaczego ta decyzja jest dla mnie trudna?</small></div>
+    <div class="field"><div class="q">2 · Rozważone opcje (min. 3)</div></div>
+    <div class="field"><div class="q">3 · Dane, na których się opieram</div></div>
+    <div class="field"><div class="q">… i czego nie wiem</div></div>
+    <div class="field"><div class="q">4 · Kryteria wyboru</div></div>
+    <div class="field"><div class="q">… z czego świadomie rezygnuję</div></div>
+    <div class="field full tall"><div class="q">5 · Mój tok rozumowania</div><small>„Skłaniam się ku …, ponieważ … Boję się, że … Zakładam, że …”</small></div>
+    <div class="field"><div class="q">Kluczowe założenia do sprawdzenia</div></div>
+    <div class="field"><div class="q">Pre-mortem</div><small>Jest za 90 dni, a decyzja okazała się błędem. Co poszło nie tak?</small></div>
+    <div class="field"><div class="q">6 · Pierwszy krok, kto, kiedy</div></div>
+    <div class="field"><div class="q">Sygnał, że zmieniam zdanie</div></div>
+  </div>
+  <div class="score"><div>Rama<b>1 2 3 4 5</b></div><div>Opcje<b>1 2 3 4 5</b></div><div>Informacje<b>1 2 3 4 5</b></div><div>Kryteria<b>1 2 3 4 5</b></div><div>Rozumowanie<b>1 2 3 4 5</b></div><div>Zobowiązanie<b>1 2 3 4 5</b></div></div>
+  <p style="margin-top:2mm;font-size:8.6pt"><strong>Pewność, że to dobra decyzja:</strong> ______ % &nbsp;&nbsp;·&nbsp;&nbsp; <strong>Data:</strong> ____________</p>
+</section>
+
+<!-- PUŁAPKI -->
+<section class="brk">
+  <h2>Autotest: 8 pułapek myślenia właściciela</h2>
+  <p>Każdy ich doświadcza, także doświadczeni menedżerowie. Przy każdej pułapce zapisz, czy mogła wpłynąć na którąś z Twoich decyzji (wpisz jej numer).</p>
+  <table class="fill">
+    <tr><th style="width:24%">Pułapka</th><th>Jak wygląda w małej firmie</th><th style="width:16%">Decyzja nr</th></tr>
+    <tr><td><strong>Zakotwiczenie</strong></td><td>Cenę ustalam względem tego, ile brałem/am 3 lata temu albo ile bierze najtańszy konkurent, a nie względem wartości dla klienta.</td><td></td></tr>
+    <tr><td><strong>Strach przed stratą</strong></td><td>Utrata jednego klienta po podwyżce boli bardziej, niż cieszy 15% więcej zysku od pozostałych.</td><td></td></tr>
+    <tr><td><strong>Koszt utopiony</strong></td><td>Trzymam nierentownego klienta albo usługę, „bo tyle już w to włożyliśmy”.</td><td></td></tr>
+    <tr><td><strong>Potwierdzanie tezy</strong></td><td>Pytam tylko tych klientów, którzy powiedzą to, co chcę usłyszeć.</td><td></td></tr>
+    <tr><td><strong>Jedna historia</strong></td><td>Decyduję na podstawie ostatniej rozmowy albo jednego głośnego przypadku zamiast danych z 12 miesięcy.</td><td></td></tr>
+    <tr><td><strong>Status quo</strong></td><td>„Nic nie zmieniać” wydaje się bezpieczne, choć też jest decyzją i ma swój koszt.</td><td></td></tr>
+    <tr><td><strong>Nadmierny optymizm co do czasu</strong></td><td>Plan zakłada, że wdrożę wszystko „przy okazji”, obok pełnego kalendarza zleceń.</td><td></td></tr>
+    <tr><td><strong>„Tylko ja to zrobię dobrze”</strong></td><td>Decyzje wymagają mojej osobistej pracy, więc firma znów zależy ode mnie.</td><td></td></tr>
+  </table>
+  <div class="box grad"><span class="tag">Wskazówka</span>Jeśli przy jednej decyzji zaznaczyłeś/aś 2 lub więcej pułapek, to dobry kandydat do omówienia na konsultacji. Trudno zauważyć własne schematy myślenia od środka.</div>
+</section>
+
+<!-- KONSULTACJA -->
+<section class="brk">
+  <div class="module-head" style="padding:6mm 9mm 6mm;margin-bottom:4mm"><div class="num">Następny krok</div><h2>Przegląd Decyzji: konsultacja indywidualna</h2><p>Masz plan. Zanim zainwestujesz w niego 90 dni, sprawdźmy razem, czy decyzje, na których stoi, są mocne.</p></div>
+
+  <div class="grid2">
+    <div>
+      <h3 style="margin-top:0">Co się dzieje na konsultacji</h3>
+      <p>Przed spotkaniem analizuję Twój Dziennik decyzji, Strategię na 1 stronie i Kalkulator. Szukam brakujących opcji, niesprawdzonych założeń i decyzji opartych na obawie zamiast na danych.</p>
+      <p>Na sesji nie podaję gotowych odpowiedzi. Zadaję pytania, dzięki którym widzisz własne decyzje z zewnątrz, i razem poprawiamy plan.</p>
+    </div>
+    <div class="box peach" style="margin:0">
+      <span class="tag">Wynik, z którym wychodzisz</span>
+      <ul class="check" style="margin:0">
+        <li><strong>Mapa decyzji:</strong> co zostawiasz, co poprawiasz, co wstrzymujesz.</li>
+        <li><strong>Ocena 6 ogniw</strong> każdej decyzji i najsłabsze miejsce Twojego rozumowania.</li>
+        <li><strong>Lista założeń do sprawdzenia</strong> wraz ze sposobem i terminem.</li>
+        <li><strong>Poprawiony plan 90 dni</strong> i 3 rekomendacje.</li>
+        <li><strong>Twój osobisty schemat decyzyjny:</strong> pułapki, na które warto uważać przy kolejnych decyzjach.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Jak to przebiega</h3>
+  <div class="flow">
+    <div class="s"><span class="n">1</span><br><strong>Zgłoszenie</strong><br>Krótki formularz i wybór terminu.</div>
+    <div class="s"><span class="n">2</span><br><strong>Materiały</strong><br>Najpóźniej 3 dni przed sesją wysyłasz kartę przygotowania i swoje pliki.</div>
+    <div class="s"><span class="n">3</span><br><strong>Analiza</strong><br>Przygotowuję analizę Twojego rozumowania i pytania.</div>
+    <div class="s"><span class="n">4</span><br><strong>Sesja 2 h</strong><br>Online. Przechodzimy przez decyzje od najsłabszej.</div>
+    <div class="s"><span class="n">5</span><br><strong>Raport + 30 dni</strong><br>Raport w 3 dni robocze, 14 dni pytań mailowych, po 30 dniach 30 minut przeglądu.</div>
+  </div>
+
+  <div class="price">
+    <div>
+      <div style="font-size:9pt;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);font-weight:700">Przegląd Decyzji</div>
+      <div class="amount">3 000 zł <span style="font-size:12pt;color:#fff;font-weight:500">netto</span></div>
+      <p style="margin:3mm 0 0">Analiza przed sesją · 2 h konsultacji · raport z mapą decyzji · 14 dni wsparcia mailowego · przegląd po 30 dniach.</p>
+      <p style="margin:2mm 0 0"><strong>Dla nabywców pakietu Kierunek Zysk</strong> cena pakietu odliczana od konsultacji.</p>
+    </div>
+    <div><div class="cta">Umów termin:<br>guliwera4.pl/konsultacja</div><p style="font-size:8.4pt;margin:3mm 0 0;text-align:center">Liczba terminów w miesiącu jest ograniczona, bo każdą analizę przygotowuję osobiście.</p></div>
+  </div>
+</section>
+
+<section class="brk">
+  <h2>Karta przygotowania do konsultacji</h2>
+  <p>Wypełnij i wyślij najpóźniej 3 dni przed sesją razem z załącznikami.</p>
+  <table class="fill">
+    <tr><td class="lab">Firma, branża, liczba osób</td><td></td></tr>
+    <tr><td class="lab">Przychód i marża netto (ostatnie 12 mies.)</td><td></td></tr>
+    <tr><td class="lab">Wynik audytu (z materiału 6) i najsłabszy obszar</td><td></td></tr>
+    <tr><td class="lab">Najważniejszy cel na 12 miesięcy</td><td></td></tr>
+  </table>
+  <div class="grid2">
+    <div class="field" style="min-height:30mm"><div class="q">Które decyzje chcesz omówić (nr kart, max 3)</div></div>
+    <div class="field" style="min-height:30mm"><div class="q">Co do której decyzji masz najmniej pewności i dlaczego</div></div>
+    <div class="field" style="min-height:30mm"><div class="q">Co musi się wydarzyć na konsultacji, żebyś uznał(a) ją za wartą swojej ceny</div></div>
+    <div class="field" style="min-height:30mm"><div class="q">Kto jeszcze w firmie podejmuje te decyzje (wspólnik, menedżer)?</div></div>
+  </div>
+  <h3>Załączniki</h3>
+  <ul class="check">
+    <li>Dziennik decyzji (karty 1–5, mogą być zdjęcia lub skan)</li>
+    <li>Strategia na 1 stronie (materiał 3)</li>
+    <li>Kalkulator Zysku z wypełnionymi arkuszami „Klienci”, „Usługi” i „Podsumowanie”</li>
+    <li>Wynik audytu (materiał 6)</li>
+    <li>Opcjonalnie: aktualny cennik i 1–2 ostatnie oferty</li>
+  </ul>
+  <div class="box navy"><span class="tag">Poufność</span>Twoje dane i materiały wykorzystuję wyłącznie do przygotowania konsultacji. Na życzenie podpisuję umowę o zachowaniu poufności.</div>
+</section>
+
+<section class="brk">
+  <h2>Rewizja decyzji po 30 i 90 dniach</h2>
+  <p>Ostatni krok, który robi największą różnicę: porównaj oczekiwania z rzeczywistością. Oddziel to, co zależało od jakości decyzji, od tego, co było szczęściem lub pechem.</p>
+  <table class="fill tall pastel">
+    <tr><th style="width:9%">Nr</th><th>Czego oczekiwałem/am</th><th>Co się wydarzyło</th><th style="width:18%">Decyzja czy przypadek?</th><th>Lekcja na przyszłość</th></tr>
+    <tr><td>1</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>2</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>3</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>4</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>5</td><td></td><td></td><td></td><td></td></tr>
+  </table>
+  <div class="box pink"><span class="tag">Moje 3 lekcje o tym, jak podejmuję decyzje</span><div class="lines" style="--n:3;margin:0"></div></div>
+  <p class="footer-note">Model sześciu ogniw: na podstawie C. Spetzler, H. Winter, J. Meyer, <em>Decision Quality</em> (Wiley, 2016). Pre-mortem: G. Klein. Rozróżnienie jakości decyzji i wyniku: A. Duke, <em>Thinking in Bets</em>. © guliwera4.pl, licencja dla jednej firmy.</p>
+</section>
+
+</body></html>
