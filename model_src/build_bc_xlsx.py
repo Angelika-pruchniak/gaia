@@ -199,13 +199,15 @@ class Sheet:
     def __init__(self, title, head):
         self.ws = wb.create_sheet(title); self.r = 5; self.R = {}
         self.ws["A1"] = head; self.ws["A1"].font = Font(bold=True, size=14)
-        hdr(self.ws, 4, ["Pozycja"] + YRS + ["Suma 0-5"])
+        hdr(self.ws, 4, ["Pozycja"] + YRS + ["Suma 0-5", "Jak liczone / skąd"]); self.notes = {}
         for i, col in enumerate(YC): self.ws[f"{col}3"] = i + 1; self.ws[f"{col}3"].font = Font(color="FFFFFF")
         self.ws.column_dimensions["A"].width = 60
         for c in "BCDEFGH": self.ws.column_dimensions[c].width = 12
+        self.ws.column_dimensions["I"].width = 78
         self.ws.freeze_panes = "B5"
-    def row(self, key, label, f, y0=None, bold=False, fill=None, total=True, fmt=NUM):
+    def row(self, key, label, f, y0=None, bold=False, fill=None, total=True, fmt=NUM, note=None):
         ws = self.ws; ws.cell(self.r, 1, label)
+        if note: self.notes[key] = note
         if y0 is not None: ws.cell(self.r, 2, "=" + y0)
         for i, col in enumerate(YC): ws[f"{col}{self.r}"] = "=" + f(i, col)
         if total: ws[f"H{self.r}"] = f"=SUM(B{self.r}:G{self.r})"
@@ -219,7 +221,7 @@ class Sheet:
         self.r += 1; self.ws.cell(self.r, 1, t).font = Font(bold=True, color=NAVY, size=12); self.r += 1
     def ref(self, key, col): return f"'{self.ws.title}'!{col}{self.R[key]}"
     def cum(self, key, label):
-        src = self.R[key]; rr = self.row(key + "_cum", label, lambda i, c: "0", y0="0", total=False)
+        src = self.R[key]; rr = self.row(key + "_cum", label, lambda i, c: "0", y0="0", total=False, note="Suma narastająca wiersza powyżej: poprzedni rok + bieżący rok")
         self.ws[f"B{rr}"] = f"=B{src}"
         for i, col in enumerate(YC):
             self.ws[f"{col}{rr}"] = f"={'B' if i == 0 else YC[i-1]}{rr}+{col}{src}"
@@ -462,4 +464,5 @@ for k, rw in enumerate(bm):
         if j == 5: c.hyperlink = t; c.font = Font(color="0563C1", underline="single")
 for col, w in zip("ABCDEF", [28, 16, 34, 48, 44, 50]): Bm.column_dimensions[col].width = w
 
+exec(open("xlsx_finish.py", encoding="utf-8").read())
 wb.save(OUT); print("ok", OUT)
