@@ -5,3 +5,5 @@
 3. `python3 build_pptx.py <przeliczony.xlsx> <przeliczony_stres.xlsx>` tworzy `../GA_GAia_jak_zarabiamy_z_partnerem.pptx`.
 
 Liczby na slajdach pochodzą wyłącznie z modelu. Po podmianie założeń na dane (CO-PA, umowy AD, oferty partnerów) wystarczy powtórzyć kroki 2-3.
+
+4. `python3 build_overlay.py <przeliczony.xlsx> <przeliczony_stres.xlsx>` nakłada liczby na oryginalny slajd z 30.10 (`slajd_30Oct.png`) i tworzy `../GA_GAia_update_30Oct_z_danymi.pptx` (slajd 30.10 + 4 slajdy uzasadnienia).
