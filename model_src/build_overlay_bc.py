@@ -32,22 +32,22 @@ def text(x, y, w, h, paras, size, anchor=MSO_ANCHOR.MIDDLE):
         p = t.paragraphs[0] if i == 0 else t.add_paragraph(); p.space_after = Pt(1)
         for s_, b, c in runs:
             r = p.add_run(); r.text = s_; r.font.size = Pt(size); r.font.bold = b; r.font.color.rgb = c; r.font.name = FONT
-ga, gas = KZ["Grupa Azoty (51%)"], KS["Grupa Azoty (51%)"]
+ga, gas = KZ["Grupa Azoty (34%)"], KS["Grupa Azoty (34%)"]
 # wariant Mirakl: zamiast "model trwale nieprofitowy"
 box(6.11, 6.04, 2.62, 0.56, AMBER)
 text(6.11, 6.04, 2.62, 0.56, [[("Opłata tylko od sprzedawców", True, WHITE)], [("zewn., nie od nawozów GA", True, WHITE)]], 9.5)
 # Scenariusz 2: ryzyka z odpowiedzią
 box(9.70, 3.64, 2.62, 1.08, RED)
 text(9.70, 3.64, 2.62, 1.08, [[("Główne ryzyko:", True, WHITE)],
-     [("• 2 partnerów → GA 51%, prezes z GA, wykup", False, WHITE)],
+     [("• 2 partnerów → jeden integrator: Partner Technologiczny", False, WHITE)],
      [(f"• Wolna adopcja → przy 150 tys. GA +{f(gas[7])} mln zł", False, WHITE)]], 9)
 # Mitygacja + wynik z business case
 box(9.70, 4.92, 2.96, 1.57, WHITE, line=NAVY)
 box(9.70, 4.92, 2.96, 0.55, GREEN)
-text(9.70, 4.92, 2.96, 0.55, [[(f"GA: +{f(ga[7],1)} mln zł / 5 lat", True, WHITE)], [(f"NPV {f(ga[8])} mln zł, zwrot w {ga[10].split()[-1]}. roku", False, WHITE)]], 10.5)
+text(9.70, 4.92, 2.96, 0.55, [[(f"GA: +{f(ga[7],1)} mln zł / 5 lat", True, WHITE)], [(f"NPV {f(ga[8])} mln zł, 0 zł wkładu GA", False, WHITE)]], 10.5)
 text(9.70, 5.47, 2.96, 1.02, [[("300 tys. użytkowników w roku 5", True, NAVY)],
      [("• każdy z 3 partnerów na plusie (dalej)", False, NAVY)], [("• premium 20 zł/mies., lepszy mix nawozów", False, NAVY)],
-     [("• opcja wykupu Partnera Technologicznego", False, NAVY)]], 9, MSO_ANCHOR.TOP)
+     [("• GA bez wkładu pieniężnego", False, NAVY)]], 9, MSO_ANCHOR.TOP)
 text(0.3, 6.8, 10.8, 0.55, [[("Liczby: business case GA_GAia_business_case_300k.xlsx (ilustracyjne, do potwierdzenia). Szczegóły na kolejnych slajdach.", False, WHITE)]], 9)
 lst = prs.slides._sldIdLst; el = lst[-1]; lst.remove(el); lst.insert(0, el)
 for n, s in enumerate(prs.slides, start=1):

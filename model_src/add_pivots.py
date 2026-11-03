@@ -30,10 +30,10 @@ ps = sheets.getByName("Tabele przestawne")
 ps.getCellByPosition(0, 0).String = "Tabele przestawne: dane z arkusza Dane, mln zł"
 ps.getCellByPosition(0, 1).String = "Filtr 'Typ' u góry każdej tabeli można zmienić. Po zmianie założeń: Dane → Odśwież wszystko."
 pivots = [("Wynik partnerów (gotówka)", "Wynik partnera", 5), ("Przychody spółki GAia wg źródła", "Przychód spółki GAia", 7),
-          ("OPEX spółki GAia wg pozycji", "OPEX spółki GAia", 9), ("Spółka GAia: EBITDA, CAPEX, gotówka", "EBITDA, CAPEX, gotówka", 6),
-          ("Koszty Partnera Technologicznego", "Koszt Partnera Technologicznego", 8), ("Z czego zarabia Partner Technologiczny", "Zarobek Partnera Technologicznego", 5),
-          ("Koszty Partnera Marketplace", "Koszt Partnera Marketplace", 4), ("Z czego zarabia Partner Marketplace", "Zarobek Partnera Marketplace", 5),
-          ("Z czego zarabia Grupa Azoty", "Wynik Grupy Azoty", 7), ("GMV platformy", "GMV", 3)]
+          ("OPEX spółki GAia wg pozycji", "OPEX spółki GAia", 9), ("Spółka GAia: EBITDA, dopłaty, dywidenda", "EBITDA i podział gotówki", 5),
+          ("Koszty Partnera Technologicznego", "Koszt Partnera Technologicznego", 8), ("Z czego zarabia Partner Technologiczny", "Zarobek Partnera Technologicznego", 6),
+          ("Koszty Partnera Marketplace", "Koszt Partnera Marketplace", 4), ("Z czego zarabia Partner Marketplace", "Zarobek Partnera Marketplace", 6),
+          ("Z czego zarabia Grupa Azoty", "Wynik Grupy Azoty", 6), ("GMV platformy", "GMV", 3)]
 row = 3
 tables = ps.getDataPilotTables(); placed = []
 for i, (title, typ, n) in enumerate(pivots):
@@ -46,7 +46,7 @@ for i, (title, typ, n) in enumerate(pivots):
     fp = f.getByIndex(2); fp.Orientation = ROW
     fy = f.getByIndex(3); fy.Orientation = COLUMN
     fv = f.getByIndex(4); fv.Orientation = DATA; fv.Function = SUM
-    d.setPropertyValue("ColumnGrand", typ not in ("EBITDA, CAPEX, gotówka", "Wynik partnera")); d.setPropertyValue("RowGrand", True)
+    d.setPropertyValue("ColumnGrand", typ not in ("EBITDA i podział gotówki", "Wynik partnera")); d.setPropertyValue("RowGrand", True)
     try: d.setPropertyValue("GrandTotalName", "Razem")
     except Exception as e: print("gt", e)
     try: d.setPropertyValue("ShowFilterButton", False)

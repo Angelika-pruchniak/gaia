@@ -118,15 +118,14 @@ def chart(sl, kind, x, y, w, h, cats, series, colors, legend=True, labels=False,
 
 Y15 = ["Rok 1", "Rok 2", "Rok 3", "Rok 4", "Rok 5"]; Y05 = ["Rok 0"] + Y15
 k = lambda name: KZ[name]; ks = lambda name: KZs[name]
-GA, TP, MPk, JV = "Grupa Azoty (51%)", "Partner Technologiczny (24,5%)", "Partner Marketplace / Handel (24,5%)", "Spółka GAia (JV) - przepływy pieniężne"
-C = rows(wb, "CAPEX budowa"); MC = rows(wb, "Moc platformy")
+GA, TP, MPk, JV = "Grupa Azoty (34%)", "Partner Technologiczny (40%)", "Partner Marketplace / Handel (26%)", "Spółka GAia (JV) - przepływy pieniężne"
+C = rows(wb, "Wkład technologiczny"); MC = rows(wb, "Moc platformy")
 users = U["Użytkownicy zarejestrowani (tys.)"]; gmv = U["GMV RAZEM"]; fg = U["GMV nawozów GA"]; g3 = U["GMV innych produktów od sprzedawców (3P)"]
 pen = U["Nawozy przez platformę / sprzedaż krajowa GA"]; buy = U["Aktywni kupujący (tys.) = użytkownicy × 35%"]
-rev = J["PRZYCHODY RAZEM"]; opex = J["OPEX RAZEM"]; ebitda = J["EBITDA"]; capex = J["CAPEX: budowa i dostosowanie (obaj partnerzy, koszt + 15%)"]
-am = J["Amortyzacja (4 lata, od roku po wydatku)"]; ebit = J["EBIT (wynik przed podatkiem)"]; fcf = J["PRZEPŁYWY PIENIĘŻNE (EBITDA - CAPEX)"]; cum = J["Przepływy skumulowane"]
-fund = J["Maksymalne zapotrzebowanie na finansowanie"][1]; fga = J["Wkład Grupy Azoty (51%)"][1]; ftp = J["Wkład Partnera Technologicznego (24,5%)"][1]; fmp = J["Wkład Partnera Marketplace (24,5%)"][1]
-captot = C["CAPEX RAZEM (koszt partnerów)"]; capj = C["CAPEX PŁACI SPÓŁKA GAia (koszt + 15%)"]; capPT = C["Razem Partner Technologiczny"]; capMP = C["Razem Partner Marketplace"]
-extPT = C["Koszty zewnętrzne Partnera Technologicznego: licencje, testy, sklepy z aplikacjami"]
+rev = J["PRZYCHODY RAZEM"]; opex = J["OPEX RAZEM"]; ebitda = J["EBITDA"]; cum = J["Przepływy skumulowane"]
+fundr = J["Dopłaty partnerów na start (gdy przepływy < 0)"]; rep = J["Zwrot dopłat partnerom (najpierw z zysku)"]; div = J["Dywidenda do podziału według udziałów"]
+fund = J["Maksymalne zapotrzebowanie na finansowanie"][1]; ftp = J["Partner Technologiczny"][1]; fmp = J["Partner Marketplace"][1]
+captot = C["WKŁAD TECHNOLOGICZNY RAZEM (z własnych zasobów partnerów)"]; capPT = C["Razem Partner Technologiczny"]; capMP = C["Razem Partner Marketplace"]
 v = lambda r, i: r[i] if r[i] is not None else 0
 def yrow(lab, r, d=1, color=None, tot=True):
     out = [lab] + [(fmt(v(r, i), d), color(v(r, i)) if color else TXT) for i in range(1, 7)]
@@ -136,12 +135,12 @@ sign = lambda x: GREEN if x > 0.05 else (RED if x < -0.05 else TXT)
 JR = lambda key: J[key]
 
 # ===== 1. Teza =====
-sl = frame("GAia: wspólna spółka trzech partnerów", "Grupa Azoty + Partner Technologiczny (silnik i UX) + Partner Marketplace / Handel (gotowy marketplace). Każdy partner zarabia.")
+sl = frame("GAia: wspólna spółka trzech partnerów", "GA wnosi produkty, logistykę, dane, ARiMR i 5 funkcjonalności, bez gotówki. Partnerzy technologiczni łączą swoje gotowe silniki.")
 tiles = [(f"{fmt(users[6])} tys.", "użytkowników w roku 5"), (f"{fmt(gmv[6]/1000, 2)} mld zł", "obrotu (GMV) w roku 5"),
-         (mln(rev[6]), "przychodu spółki w roku 5"), (mln(captot[7], 1), "CAPEX budowy (lata 0-2)")]
+         (mln(rev[6]), "przychodu spółki w roku 5"), ("0 zł", "wkładu pieniężnego Grupy Azoty")]
 for i, (big, small) in enumerate(tiles):
     x = 0.6 + i * 3.07
-    box(sl, x, 1.45, 2.9, 1.2, fill=NAVY)
+    box(sl, x, 1.45, 2.9, 1.2, fill=NAVY if i < 3 else GREEN)
     tb(sl, x, 1.5, 2.9, 0.7, big, 26, True, WHITE, PP_ALIGN.CENTER, MSO_ANCHOR.MIDDLE)
     tb(sl, x, 2.15, 2.9, 0.45, small, 12.5, False, WHITE, PP_ALIGN.CENTER)
 data = [["Partner (gotówka)", "Wynik w roku 5", "Suma 5 lat (z rokiem 0)", "NPV (10%)", "Zwrot od"]]
@@ -149,16 +148,16 @@ for nm in (GA, TP, MPk):
     r = k(nm); data.append([nm, (mln(r[6], 1), GREEN), (mln(r[7], 1), GREEN), mln(r[8], 1), r[10]])
 r = k(JV); data.append(["Spółka GAia: gotówka platformy", (mln(r[6], 1), GREEN), (mln(r[7], 1), GREEN), mln(r[8], 1), r[10]])
 table(sl, 0.6, 2.85, 12.1, data, [4.0, 2.0, 2.4, 1.9, 1.8], rh=0.55, size=13, hl_rows=(1,))
-msg(sl, [("Prosty mechanizm: ", True, WHITE), ("każdy wnosi to, co już ma, za usługi bierze koszt + 15%, za użyczone IP licencję, a zysk dzielimy według udziałów 51 / 24,5 / 24,5.", False, WHITE)])
+msg(sl, [("Prosty mechanizm: ", True, WHITE), ("partnerzy wnoszą pracę w pierwszym roku, zarabiają na licencjach do swoich silników, usługach (koszt + 15%) i dywidendzie. GA zarabia na sprzedaży i dywidendzie.", False, WHITE)])
 
-# ===== 2. Struktura JV =====
+# ===== 2. Jak działa współpraca =====
 sl = frame("Jak działa współpraca", "Spółka GAia: trzech wspólników, jeden produkt dla rolnika")
-cols = [("Grupa Azoty", "51%", NAVY, ["Produkty, produkcja, logistyka", "Sieć sprzedaży: 66 punktów wydania", "Marka i klienci", "5 gotowych funkcjonalności"],
-         ["51% zysku spółki", "Większy udział w rynku AN/CAN", "Lepszy mix, niższy koszt kanału"]),
-        ("Partner Technologiczny", "24,5%", MBLUE, ["Silnik platformy agro (licencja)", "Warstwa UX: web i aplikacja", "Mapy pól, asystent AI, integracje", "Utrzymanie 24/7"],
-         ["Koszt + 15% za budowę i utrzymanie", "Licencja: 3 zł / użytkownik / rok", "24,5% zysku spółki"]),
-        ("Partner Marketplace / Handel", "24,5%", LBLUE, ["Gotowy marketplace (licencja)", "Katalog, koszyk, płatności", "Panel i baza sprzedawców, reklama", "Operacje marketplace'u"],
-         ["Koszt + 15% za dostosowanie i operacje", "Licencja: 0,5% obrotu innych produktów", "24,5% zysku spółki"])]
+cols = [("Grupa Azoty", "34%", NAVY, ["Produkty, produkcja, logistyka", "Współpraca z ARiMR i dane", "Sieć sprzedaży i punkty wydania, klienci", "5 funkcjonalności na Azure (audyt, bez wyceny)"],
+         ["Bez wkładu pieniężnego", "34% dywidendy", "Większy udział w rynku, mix, niższy koszt kanału"]),
+        ("Partner Technologiczny (główny)", "40%", MBLUE, ["Gotowy silnik agro (licencja)", "UX: web i aplikacja mobilna", "Grywalizacja, ARiMR, Węzeł Krajowy", "Łączy całość, utrzymanie 24/7"],
+         ["Licencja: 10 zł / użytkownik / rok", "Koszt + 15% za utrzymanie", "40% dywidendy"]),
+        ("Partner Marketplace / Handel", "26%", LBLUE, ["Gotowy marketplace (licencja)", "Podpięty do GAia przez plug-in", "Katalog, koszyk, płatności, sprzedawcy", "Operacje marketplace'u"],
+         ["Licencja: 1% obrotu innych produktów", "Koszt + 15% za operacje", "26% dywidendy"])]
 for i, (name, sh, colr, gives, earns) in enumerate(cols):
     x = 0.6 + i * 4.1
     box(sl, x, 1.2, 3.9, 0.75, fill=colr)
@@ -170,23 +169,43 @@ for i, (name, sh, colr, gives, earns) in enumerate(cols):
     tb(sl, x + 0.1, 3.97, 3.7, 0.3, "ZARABIA", 11, True, NAVY)
     tb(sl, x + 0.1, 4.24, 3.7, 1.0, ["• " + t for t in earns], 12)
 box(sl, 0.6, 5.38, 12.1, 0.75, line=NAVY)
-tb(sl, 0.7, 5.38, 11.9, 0.75, [[("Spółka GAia: ", True, NAVY), ("sprzedaje rolnikom nawozy GA i produkty innych sprzedawców, pobiera prowizje, reklamę, abonament premium. Płaci partnerom za usługi i licencje. Zysk wraca do wspólników.", False, TXT)]], 12.5, anchor=MSO_ANCHOR.MIDDLE)
-msg(sl, [("Nie budujemy marketplace'u od zera. ", True, WHITE), ("Partner Marketplace go użycza, Partner Technologiczny dokłada silnik agro i UX, a GA produkty i klientów.", False, WHITE)])
+tb(sl, 0.7, 5.38, 11.9, 0.75, [[("Pierwszy rok: ", True, NAVY), (f"partnerzy z własnych zasobów dopracowują GAia i aplikację mobilną ({mln(captot[7],1)} pracy). Nie budujemy nic od zera: łączymy silnik, marketplace i 5 funkcjonalności GA.", False, TXT)]], 12.5, anchor=MSO_ANCHOR.MIDDLE)
+msg(sl, [("GA nie wpłaca pieniędzy. ", True, WHITE), ("Start spółki finansują partnerzy technologiczni, a zysk najpierw zwraca im dopłaty, potem idzie na dywidendę.", False, WHITE)])
 
-# ===== 3. Benchmark: jak buduje się takie JV =====
+# ===== 3. Architektura =====
+sl = frame("Architektura GAia: łączymy gotowe elementy", "Partner Technologiczny integruje całość. Nowe są tylko UX, grywalizacja i integracje.")
+box(sl, 0.6, 1.2, 12.1, 0.95, fill=NAVY)
+tb(sl, 0.6, 1.2, 12.1, 0.95, [[("APLIKACJA GAia dla rolnika (web + iOS / Android)", True, WHITE)], [("nowa warstwa UX + grywalizacja: punkty, odznaki, wyzwania sezonowe, nagrody  |  Partner Technologiczny", False, WHITE)]], 14, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+layers = [("Silnik agro", "Partner Technologiczny", "plan upraw, mapy pól, rekomendacje, asystent AI", MBLUE, "gotowy, licencja"),
+          ("Marketplace", "Partner Marketplace / Handel", "katalog, koszyk, płatności, sprzedawcy, reklama", LBLUE, "gotowy, plug-in, licencja"),
+          ("5 funkcjonalności GA", "Grupa Azoty, Azure", "plan nawożenia, CRM, Nawozy.eu, koszyk, portal sprzedaży", GREEN, "gotowe, audyt i API")]
+for i, (nm, who, what, col, tag) in enumerate(layers):
+    x = 0.6 + i * 4.1
+    box(sl, x, 2.35, 3.9, 1.75, fill=col)
+    tb(sl, x, 2.38, 3.9, 1.7, [[(nm, True, WHITE)], [(who, False, WHITE)], [(what, False, WHITE)], [(tag, True, WHITE)]], 12.5, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+ints = [("ARiMR", "działki i uprawy z wniosków"), ("Węzeł Krajowy / mObywatel", "logowanie profilem zaufanym"), ("SAP / CRM GA", "ceny, dostępność, zamówienia"),
+        ("Punkty wydania GA", "odbiór i dostawa nawozów"), ("Bank", "kredyt kupiecki w koszyku")]
+for i, (nm, what) in enumerate(ints):
+    x = 0.6 + i * 2.44
+    box(sl, x, 4.3, 2.3, 0.95, line=NAVY)
+    tb(sl, x, 4.3, 2.3, 0.95, [[(nm, True, NAVY)], [(what, False, TXT)]], 11, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+tb(sl, 0.6, 5.35, 12.1, 0.6, [[("Integracje (Partner Technologiczny): ", True, NAVY), ("wszystkie przez API. Marketplace podpinany przez plug-in, 5 funkcjonalności GA po audycie, bez przepisywania.", False, TXT)]], 12)
+msg(sl, [("Szybko i tanio: ", True, WHITE), (f"{fmt(captot[3])} osobomiesięcy pracy w roku 0 zamiast budowy platformy od zera.", False, WHITE)])
+
+# ===== 4. Benchmark JV =====
 sl = frame("Benchmark: jak buduje się takie współprace", "Wnioski z praktyk joint venture i przykładów z rynku agro")
 data = [["Praktyka", "Przykład / źródło", "Jak to robimy w GAia"],
-        ["Udziały za wkład rzeczowy, nie tylko gotówkę", "Bosch × BASF Smart Farming: JV 50/50, każdy wnosi swoją technologię (2021)", "GA, Partner Technologiczny i Partner Marketplace wnoszą to, co już mają"],
+        ["Udziały za wkład rzeczowy, nie tylko gotówkę", "Bosch × BASF Smart Farming: JV 50/50, każdy wnosi swoją technologię (2021)", "GA wnosi produkt, dane i ARiMR; partnerzy wnoszą silniki i pracę"],
         ["IP wnoszone licencją, nie przenoszone", "WIPO, Ankura: licencja jest bardziej elastyczna niż przeniesienie IP", "Silnik i marketplace zostają u partnerów; spółka płaci licencję"],
-        ["Usługi wspólników po koszcie z marżą", "Umbrex: usługi dla JV po koszcie, wartość w udziałach", "Koszt + 15% za budowę, utrzymanie i operacje"],
-        ["Jasna kontrola przy jednym wiodącym partnerze", "Umbrex: 50/50 tylko przy bardzo mocnym ładzie korporacyjnym", "GA 51%, prezes z GA, sprawy zastrzeżone jednomyślnie"],
-        ["Ścieżka impasu i wyjścia", "Praktyki JV: eskalacja, mediacja, opcja wykupu", "Po 3 latach GA może odkupić udziały partnera po ustalonej formule"],
+        ["Usługi wspólników po koszcie z marżą", "Umbrex: usługi dla JV po koszcie, wartość w udziałach", "Koszt + 15% za utrzymanie i operacje"],
+        ["Zwrot wkładu finansującego przed dywidendą", "Praktyka JV: preferencyjny zwrot dopłat wspólnika", "Zysk najpierw zwraca dopłaty partnerów, potem dywidenda"],
+        ["Ochrona wspólnika bez gotówki", "KSH: zmiana umowy spółki wymaga 2/3 głosów", "GA 34%: pakiet blokujący bez wkładu pieniężnego"],
         ["Producent inwestuje w kanał cyfrowy", "Yara prowadziła rundę 30 mln USD w marketplace Agrofy (2021)", "GA jest wspólnikiem, a nie tylko sprzedawcą na platformie"]]
 table(sl, 0.6, 1.2, 12.1, data, [3.6, 4.5, 4.0], rh=0.62, size=11.5)
 tb(sl, 0.6, 5.65, 12.1, 0.4, "Źródła: basf.com (11.2020), umbrex.com, jvalchemist.ankura.com, wipo.int, agfundernews.com (Agrofy, 12.2021).", 10, False, GREY)
-msg(sl, [("Wniosek: ", True, WHITE), ("prosty, sprawdzony model. Wkład za udziały, usługi i licencje rozliczane osobno, kontrola przy GA.", False, WHITE)])
+msg(sl, [("Wniosek: ", True, WHITE), ("każdy wnosi to, co ma najlepsze, licencje i usługi rozliczane osobno, a ryzyko finansowe biorą partnerzy technologiczni.", False, WHITE)])
 
-# ===== 4. Benchmark: na czym zarabia konkurencja =====
+# ===== 5. Benchmark: na czym zarabia konkurencja =====
 sl = frame("Benchmark: na czym zarabia konkurencja", "Z tego wynikają stawki w modelu")
 data = [["Firma", "Liczby", "Na czym najwięcej zarabia", "Stawka w GAia"],
         ["Allegro", "Prowizja 12,0%, reklama ok. 2,0% GMV (IV kw. 2024)", "Prowizje od sprzedawców i reklama", "Prowizja 7%, reklama 1,5%"],
@@ -199,6 +218,7 @@ data = [["Firma", "Liczby", "Na czym najwięcej zarabia", "Stawka w GAia"],
 table(sl, 0.6, 1.2, 12.1, data, [2.2, 4.0, 3.4, 2.5], rh=0.55, size=11.5)
 tb(sl, 0.6, 5.65, 12.1, 0.4, "Źródła: about.allegro.eu (wyniki IV kw. 2024), farming.co.uk, basf.com (09.2025), climate.com/en-gb/pricing, wiescirolnicze.pl, agfundernews.com, entrackr.com.", 10, False, GREY)
 msg(sl, [("Konkurencja zarabia na produkcie, a nie na aplikacji. ", True, WHITE), ("Dlatego GA zarabia głównie na udziale w rynku, a spółka na prowizjach i reklamie.", False, WHITE)])
+
 
 # ===== 5. Ścieżka + dane =====
 sl = frame("Ścieżka do 300 tys. użytkowników: dane", "GMV = aktywni kupujący × zakupy na kupującego. 300 tys. to ok. 25% z 1,21 mln rolników w ARiMR.")
@@ -219,6 +239,7 @@ data = [["Dane", "Rok 1", "Rok 2", "Rok 3", "Rok 4", "Rok 5", "Skąd"],
         ["Nawozy przez platformę / sprzedaż krajowa GA"] + [f"{fmt(x*100)}%" for x in pen[2:7]] + ["÷ 3,69 mld zł"]]
 table(sl, 0.6, 3.45, 12.1, data, [4.3, 1.2, 1.2, 1.2, 1.2, 1.2, 1.8], rh=0.27, size=11, hl_rows=(8,))
 
+
 # ===== 6. Moc platformy =====
 sl = frame("Moc platformy w liczbach", "Rok 5, przy 300 tys. użytkowników")
 tiles = [(f"{fmt(users[6])} tys.", "użytkowników"), (f"{fmt(buy[6])} tys.", "aktywnych kupujących"), (f"{fmt(MC['Abonenci premium (tys.)'][6])} tys.", "abonentów premium"),
@@ -238,54 +259,54 @@ for lab, key, d in mrows:
     r = MC[key]; data.append([lab] + [(f"{fmt(x*100,1)}%" if d < 0 else fmt(x, d), sign(x) if 'EBITDA' in key else TXT) for x in r[2:7]])
 table(sl, 0.6, 3.75, 12.1, data, [4.6, 1.5, 1.5, 1.5, 1.5, 1.5], rh=0.32, size=11.5)
 
-# ===== 7. CAPEX =====
-sl = frame("CAPEX: co budujemy, kto buduje, za ile i kiedy", f"{fmt(captot[3])} osobomiesięcy × 20 tys. zł + koszty zewnętrzne = {mln(captot[7],1)}. Marketplace nie jest budowany od zera.")
-mods = [r for r in wb["CAPEX budowa"].iter_rows(min_row=5, max_row=21, values_only=True)]
-data = [["Moduł", "Kto", "Osobo-\nmiesiące", "Koszt", "Rok 0", "Rok 1", "Rok 2"]]
-for r in mods: data.append([r[0], "PT" if r[1].startswith("Partner T") else "PM", fmt(r[3]), fmt(r[7], 2), fmt(r[8], 2), fmt(r[9], 2), fmt(r[10], 2)])
-data.append(["Koszty zewnętrzne (licencje, testy, sklepy z aplikacjami)", "PT", "", fmt(extPT[7], 2), fmt(extPT[8], 2), fmt(extPT[9], 2), fmt(extPT[10], 2)])
-data.append(["CAPEX razem (koszt partnerów)", "", fmt(captot[3]), fmt(captot[7], 2), fmt(captot[8], 2), fmt(captot[9], 2), fmt(captot[10], 2)])
-data.append(["Spółka GAia płaci (koszt + 15%)", "", "", fmt(capj[7], 2), fmt(capj[8], 2), fmt(capj[9], 2), fmt(capj[10], 2)])
-table(sl, 0.6, 1.2, 8.6, data, [4.1, 0.55, 0.85, 0.8, 0.75, 0.75, 0.8], rh=0.235, size=9, hl_rows=(19, 20))
+
+
+# ===== 8. Wkład technologiczny =====
+sl = frame("Rok 0: partnerzy dopracowują GAia", f"{fmt(captot[3])} osobomiesięcy × 20 tys. zł = {mln(captot[7],1)} pracy z własnych zasobów partnerów. Spółka GAia nie ma CAPEX.")
+mods = [r for r in wb["Wkład technologiczny"].iter_rows(min_row=5, max_row=19, values_only=True)]
+data = [["Moduł", "Kto", "Osobo-\nmiesiące", "Koszt,\nmln zł", "Rok 0", "Rok 1"]]
+for r in mods: data.append([r[0], "PT" if r[1].startswith("Partner T") else "PM", fmt(r[3]), fmt(r[7], 2), fmt(r[8], 2), fmt(r[9], 2)])
+data.append(["Partner Technologiczny razem", "PT", fmt(capPT[3]), fmt(capPT[7], 2), fmt(capPT[8], 2), fmt(capPT[9], 2)])
+data.append(["Partner Marketplace razem", "PM", fmt(capMP[3]), fmt(capMP[7], 2), fmt(capMP[8], 2), fmt(capMP[9], 2)])
+data.append(["Wkład technologiczny razem", "", fmt(captot[3]), fmt(captot[7], 2), fmt(captot[8], 2), fmt(captot[9], 2)])
+table(sl, 0.6, 1.2, 8.6, data, [4.6, 0.6, 0.9, 0.9, 0.8, 0.8], rh=0.255, size=9.5, hl_rows=(18,))
 box(sl, 9.4, 1.2, 3.3, 4.95, line=NAVY)
 tb(sl, 9.5, 1.28, 3.1, 4.85, [
-    [("Partner Technologiczny (PT)", True, MBLUE)], [(f"{fmt(capPT[3])} osobomies., {mln(capPT[7]+extPT[7],1)}", False, TXT)], [("silnik agro, UX, aplikacja, integracje, mapy pól, AI", False, GREY)],
-    [("Partner Marketplace (PM)", True, MBLUE)], [(f"{fmt(capMP[3])} osobomies., {mln(capMP[7],1)}", False, TXT)], [("tylko dostosowanie gotowego marketplace'u do agro", False, GREY)],
-    [("Nie budujemy", True, NAVY)], [("katalogu, koszyka, płatności, panelu sprzedawcy, reklamy: ok. 150 osobomiesięcy oszczędności", False, TXT)],
-    [("Harmonogram", True, NAVY)], [(f"Rok 0: {mln(capj[8],1)}  |  Rok 1: {mln(capj[9],1)}  |  Rok 2: {mln(capj[10],1)}", False, TXT)],
-    [("Amortyzacja 4 lata. GA osobno: integracja SAP / CRM 3 mln zł.", False, GREY)]], 11)
-msg(sl, [("Płacimy w 3 transzach za dowiezione moduły, ", True, WHITE), ("po koszcie + 15%. Każdy moduł ma osobomiesiące i rok.", False, WHITE)], y=6.3)
+    [("Partner Technologiczny", True, MBLUE)], [(f"{fmt(capPT[3])} osobomies., {mln(capPT[7],1)}", False, TXT)], [("UX, aplikacja, grywalizacja, ARiMR, Węzeł Krajowy, plug-in, SAP", False, GREY)],
+    [("Partner Marketplace", True, MBLUE)], [(f"{fmt(capMP[3])} osobomies., {mln(capMP[7],1)}", False, TXT)], [("plug-in, kategorie agro, zamówienia do punktów wydania", False, GREY)],
+    [("Grupa Azoty", True, GREEN)], [("0 zł. Udostępnia 5 funkcjonalności z Azure (audyt), dane i współpracę z ARiMR", False, TXT)],
+    [("Już istnieje, nie budujemy", True, NAVY)], [("silnik agro, marketplace, 5 funkcjonalności GA", False, TXT)]], 11)
+msg(sl, [("Partnerzy odzyskują ten wkład ", True, WHITE), ("z licencji do swoich silników, marży na usługach i dywidendy.", False, WHITE)], y=6.3)
 
-# ===== 8. Przychody i OPEX =====
+# ===== 9. Przychody i OPEX =====
 sl = frame("Spółka GAia: przychody i OPEX rok po roku", "mln zł. Stawki z benchmarku konkurencji i marketplace'ów.")
 rl = [("Prowizje: GMV 3P × 7%", "Prowizje: GMV 3P × 7%"), ("Reklama: GMV 3P × 1,5%", "Reklama: GMV 3P × 1,5%"), ("Prowizja od nawozów GA: × 1,2%", "Prowizja od nawozów GA: GMV nawozów × 1,2%"),
       ("Finansowanie: GMV × 0,4%", "Finansowanie: GMV × 0,4%"), ("Abonament premium: × 240 zł / rok", "Abonament premium: abonenci × 240 zł"), ("Analizy dla producentów", "Analizy dla producentów")]
 ol = [("Partner Technologiczny: utrzymanie (koszt + 15%)", "Partner Technologiczny: utrzymanie i rozwój (koszt + 15%)"), ("Partner Marketplace: operacje (koszt + 15%)", "Partner Marketplace: operacje (koszt + 15%)"),
-      ("Licencja: silnik (3 zł / użytkownik)", "Licencja: silnik Partnera Technologicznego (3 zł / użytkownik)"), ("Licencja: marketplace (0,5% GMV 3P)", "Licencja: marketplace Partnera Marketplace (0,5% GMV 3P)"),
+      ("Licencja: silnik (10 zł / użytkownik)", "Licencja: silnik Partnera Technologicznego (10 zł / użytkownik)"), ("Licencja: marketplace (1% GMV 3P)", "Licencja: marketplace Partnera Marketplace (1% GMV 3P)"),
       ("Płatności: GMV × 0,6%", "Płatności: GMV × 0,6%"), ("Marketing: nowi × 60 zł + marka 3 mln", "Marketing: nowi użytkownicy × 60 zł + marka 3 mln zł"),
       ("Obsługa klienta", "Obsługa klienta: 1 konsultant na 20 tys. użytkowników"), ("Zarząd i zespół spółki (6 osób)", "Zarząd i zespół spółki (6 osób)")]
 data = [["mln zł", "Rok 0", "Rok 1", "Rok 2", "Rok 3", "Rok 4", "Rok 5", "Suma"]]
 for lab, key in rl: data.append(yrow(lab, J[key]))
 data.append(yrow("PRZYCHODY RAZEM", rev))
 for lab, key in ol: data.append(yrow(lab, J[key]))
-data.append(yrow("OPEX RAZEM", opex)); data.append(yrow("EBITDA", ebitda, color=sign))
+data.append(yrow("OPEX RAZEM", opex)); data.append(yrow("EBITDA (= gotówka spółki)", ebitda, color=sign))
 table(sl, 0.6, 1.2, 12.1, data, [4.6, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.5], rh=0.272, size=10.5, hl_rows=(7, 16, 17))
 
-# ===== 9. EBITDA, CAPEX, gotówka =====
-sl = frame("Spółka GAia: EBITDA, CAPEX i gotówka", f"Potrzeba finansowania: {mln(fund,1)}: GA {mln(fga,1)}, Partner Technologiczny {mln(ftp,1)}, Partner Marketplace {mln(fmp,1)}.")
+# ===== 10. Gotówka i finansowanie startu =====
+sl = frame("Spółka GAia: gotówka, start i dywidenda", f"Start finansują partnerzy technologiczni: {mln(fund,1)} (PT {mln(ftp,1)}, PM {mln(fmp,1)}). GA: 0 zł.")
 chart(sl, XL_CHART_TYPE.COLUMN_CLUSTERED, 0.6, 1.2, 6.4, 3.3, Y05,
-      [("EBITDA", [round(v(ebitda, i), 1) for i in range(1, 7)]), ("CAPEX", [-round(v(capex, i), 1) for i in range(1, 7)]), ("Przepływy skumulowane", [round(v(cum, i), 1) for i in range(1, 7)])], [NAVY, RED, GREEN])
-data = [["mln zł", "Rok 0", "Rok 1", "Rok 2", "Rok 3", "Rok 4", "Rok 5", "Suma"], yrow("Przychody", rev), yrow("OPEX", opex), yrow("EBITDA", ebitda, color=sign),
-        yrow("Amortyzacja", am), yrow("EBIT (przed podatkiem)", ebit, color=sign), yrow("CAPEX", capex), yrow("Przepływy (EBITDA - CAPEX)", fcf, color=sign), yrow("Przepływy skumulowane", cum, color=sign, tot=False) + [""]]
-table(sl, 0.6, 4.6, 12.1, data, [4.1, 1.05, 1.05, 1.05, 1.05, 1.05, 1.05, 1.5], rh=0.205, size=9.5, hl_rows=(7,))
+      [("EBITDA", [round(v(ebitda, i), 1) for i in range(1, 7)]), ("Dywidenda", [round(v(div, i), 1) for i in range(1, 7)]), ("Przepływy skumulowane", [round(v(cum, i), 1) for i in range(1, 7)])], [NAVY, GREEN, LBLUE])
+data = [["mln zł", "Rok 0", "Rok 1", "Rok 2", "Rok 3", "Rok 4", "Rok 5", "Suma"], yrow("Przychody", rev), yrow("OPEX", opex), yrow("EBITDA = gotówka spółki", ebitda, color=sign),
+        yrow("Dopłaty partnerów na start", fundr), yrow("Zwrot dopłat partnerom", rep), yrow("Dywidenda (34 / 40 / 26)", div, color=sign), yrow("Przepływy skumulowane", cum, color=sign, tot=False) + [""]]
+table(sl, 0.6, 4.6, 12.1, data, [4.1, 1.05, 1.05, 1.05, 1.05, 1.05, 1.05, 1.5], rh=0.22, size=9.5, hl_rows=(6,))
 box(sl, 7.3, 1.2, 5.4, 3.3, line=NAVY)
-lowest = min(v(cum, i) for i in range(1, 7))
-tb(sl, 7.4, 1.28, 5.2, 3.2, [[("Skąd potrzeba finansowania", True, NAVY)], [(f"Rok 0: budowa {mln(capex[1],1)} + start {mln(opex[1],1)}", False, TXT)],
-    [("Lata 1-2: dalsza budowa i ujemna EBITDA przy małej liczbie użytkowników", False, TXT)], [(f"Najniżej: {mln(lowest,1)} na koniec roku 2", True, RED)],
-    [("Jak finansujemy (według udziałów)", True, NAVY)], [(f"GA {mln(fga,1)}  |  PT {mln(ftp,1)}  |  PM {mln(fmp,1)}", True, TXT)],
-    [("Kiedy wraca", True, NAVY)], [(f"Gotówka dodatnia od roku 3, zwrot w roku 4. Suma 5 lat: +{mln(fcf[7],1)}", True, GREEN)]], 12)
+tb(sl, 7.4, 1.28, 5.2, 3.2, [[("Kto finansuje start", True, NAVY)], [(f"Partner Technologiczny {mln(ftp,1)}, Partner Marketplace {mln(fmp,1)} (proporcja 40 : 26)", False, TXT)],
+    [("Grupa Azoty: 0 zł", True, GREEN)],
+    [("Kolejność wypłat", True, NAVY)], [("1. Zysk najpierw zwraca partnerom dopłaty (lata 3-4)", False, TXT)], [("2. Potem dywidenda dla wszystkich: 34 / 40 / 26", False, TXT)],
+    [("Bez CAPEX w spółce", True, NAVY)], [("Budowa to wkład partnerów, więc EBITDA = gotówka", False, TXT)]], 12)
 
-# ===== 10. Przepływ pieniędzy =====
+# ===== 11. Przepływ pieniędzy =====
 sl = frame("Przepływ pieniędzy w roku 5: kto ile dostaje", f"Rolnicy kupują za {mln(gmv[6])}. Do spółki GAia trafia {mln(rev[6],1)}, czyli {fmt(rev[6]/gmv[6]*100,1)}% obrotu.")
 def node(x, y_, w, h, title, val, fill):
     box(sl, x, y_, w, h, fill=fill); tb(sl, x, y_, w, h, [[(title, False, WHITE)], [(val, True, WHITE)]], 11.5, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
@@ -300,64 +321,66 @@ yy = 1.3
 for lab, val in srcs:
     box(sl, 5.75, yy, 1.85, 0.56, line=NAVY); tb(sl, 5.75, yy, 1.85, 0.56, [[(lab + "  ", False, TXT), (fmt(val, 1), True, NAVY)]], 11, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE); yy += 0.66
 arrow(7.65, 3.1); node(8.05, 2.45, 1.8, 1.6, "Spółka GAia: przychód", mln(rev[6], 1), NAVY); arrow(9.9, 3.1)
-ptp = JR("Partner Technologiczny: utrzymanie i rozwój (koszt + 15%)")[6] + JR("Licencja: silnik Partnera Technologicznego (3 zł / użytkownik)")[6]
-pmp = JR("Partner Marketplace: operacje (koszt + 15%)")[6] + JR("Licencja: marketplace Partnera Marketplace (0,5% GMV 3P)")[6]
+ptp = JR("Partner Technologiczny: utrzymanie i rozwój (koszt + 15%)")[6] + JR("Licencja: silnik Partnera Technologicznego (10 zł / użytkownik)")[6]
+pmp = JR("Partner Marketplace: operacje (koszt + 15%)")[6] + JR("Licencja: marketplace Partnera Marketplace (1% GMV 3P)")[6]
 other = opex[6] - ptp - pmp
 outs = [("PT: usługi + licencja", ptp, MBLUE), ("PM: usługi + licencja", pmp, LBLUE), ("Płatności, marketing, zespół", other, GREY),
-        ("EBITDA → GA 51%", ebitda[6] * 0.51, GREEN), ("EBITDA → PT 24,5%", ebitda[6] * 0.245, GREEN), ("EBITDA → PM 24,5%", ebitda[6] * 0.245, GREEN)]
+        ("Dywidenda → GA 34%", div[6] * 0.34, GREEN), ("Dywidenda → PT 40%", div[6] * 0.40, GREEN), ("Dywidenda → PM 26%", div[6] * 0.26, GREEN)]
 yy = 1.3
 for lab, val, col in outs:
     box(sl, 10.3, yy, 2.4, 0.56, fill=col); tb(sl, 10.3, yy, 2.4, 0.56, [[(lab + "  ", False, WHITE), (fmt(val, 1), True, WHITE)]], 10.5, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE); yy += 0.66
-msg(sl, [("W roku 5: ", True, WHITE), (f"Partner Technologiczny {fmt(ptp,1)} + {fmt(ebitda[6]*0.245,1)} mln zł, Partner Marketplace {fmt(pmp,1)} + {fmt(ebitda[6]*0.245,1)} mln zł, GA {fmt(ebitda[6]*0.51,1)} mln zł z zysku spółki + korzyści na nawozach.", False, WHITE)], y=6.3)
+msg(sl, [("W roku 5: ", True, WHITE), (f"Partner Technologiczny {fmt(ptp,1)} + {fmt(div[6]*0.4,1)} mln zł, Partner Marketplace {fmt(pmp,1)} + {fmt(div[6]*0.26,1)} mln zł, GA {fmt(div[6]*0.34,1)} mln zł dywidendy + korzyści na nawozach.", False, WHITE)], y=6.3)
 
-# ===== 11/12. Partnerzy =====
-def partner_slide(Pd, title, color, src_labels):
-    s1, s2, s3, s4 = (Pd[x] for x in src_labels); tres = [r for kk, r in Pd.items() if kk.startswith("WYNIK PARTNERA")][0]; tcum = Pd["Wynik skumulowany"]
-    cost = Pd["KOSZTY PARTNERA RAZEM (CAPEX + OPEX)"]; fee = Pd["Razem od spółki GAia"]
+# ===== 12/13. Partnerzy =====
+def partner_slide(Pd, title, src_labels, lic_txt, sh_txt):
+    s0, s1, s2, s3, s4 = (Pd[x] for x in src_labels)
+    tres = [r for kk, r in Pd.items() if kk.startswith("WYNIK PARTNERA")][0]; tcum = Pd["Wynik skumulowany"]
+    cost = Pd["KOSZTY PARTNERA RAZEM (wkład + OPEX)"]
     nm = TP if "Techn" in title else MPk
-    sl = frame(title, f"Koszty po jego stronie w 5 lat: {mln(cost[7],1)}. Zarobek: +{mln(tres[7],1)}, NPV {mln(k(nm)[8],1)}, zwrot w {k(nm)[10]}.")
+    sl = frame(title, f"Wkład w roku 0-1: {mln(-s0[7],1)}. Zarobek w 5 lat: +{mln(tres[7],1)}, NPV {mln(k(nm)[8],1)}, zwrot w {k(nm)[10]}.")
     chart(sl, XL_CHART_TYPE.COLUMN_STACKED, 0.6, 1.2, 6.6, 3.4, Y05,
-          [("1. Marża na budowie", [round(v(s1, i), 1) for i in range(1, 7)]), ("2. Marża na usługach", [round(v(s2, i), 1) for i in range(1, 7)]),
-           ("3. Licencja", [round(v(s3, i), 1) for i in range(1, 7)]), ("4. Udział 24,5% w gotówce", [round(v(s4, i), 1) for i in range(1, 7)])], [AMBER, MBLUE, LBLUE, GREEN])
-    data = [["mln zł", "Rok 0", "Rok 1", "Rok 2", "Rok 3", "Rok 4", "Rok 5", "Suma"], yrow("Koszty Partnera (CAPEX + OPEX)", cost), yrow("Płaci spółka GAia (koszt + 15%)", fee),
-            yrow("1. Marża 15% na budowie", s1, color=sign), yrow("2. Marża 15% na usługach", s2, color=sign), yrow("3. Licencja za użyczenie IP", s3, color=sign),
-            yrow("4. Udział 24,5% w gotówce spółki", s4, color=sign), yrow("WYNIK PARTNERA", tres, color=sign), yrow("Skumulowany", tcum, color=sign, tot=False) + [""]]
-    table(sl, 0.6, 4.7, 12.1, data, [4.6, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.5], rh=0.19, size=9.5, hl_rows=(7,))
+          [("0. Wkład własny", [round(v(s0, i), 1) for i in range(1, 7)]), ("1. Marża na usługach", [round(v(s1, i), 1) for i in range(1, 7)]),
+           ("2. Licencja", [round(v(s2, i), 1) for i in range(1, 7)]), ("3. Dopłaty / zwrot", [round(v(s3, i), 1) for i in range(1, 7)]),
+           ("4. Dywidenda", [round(v(s4, i), 1) for i in range(1, 7)])], [RED, MBLUE, LBLUE, AMBER, GREEN])
+    data = [["mln zł", "Rok 0", "Rok 1", "Rok 2", "Rok 3", "Rok 4", "Rok 5", "Suma"],
+            yrow("0. Wkład własny (praca w roku 0-1)", s0, color=sign), yrow("1. Marża 15% na usługach", s1, color=sign), yrow(f"2. Licencja: {lic_txt}", s2, color=sign),
+            yrow("3. Dopłaty na start i ich zwrot", s3, color=sign), yrow(f"4. Dywidenda {sh_txt}", s4, color=sign), yrow("WYNIK PARTNERA", tres, color=sign), yrow("Skumulowany", tcum, color=sign, tot=False) + [""]]
+    table(sl, 0.6, 4.7, 12.1, data, [4.6, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.5], rh=0.215, size=9.5, hl_rows=(6,))
     box(sl, 7.5, 1.2, 5.2, 3.4, line=NAVY)
-    lic_txt = "3 zł za użytkownika rocznie" if "Techn" in title else "0,5% obrotu innych produktów"
     tb(sl, 7.6, 1.28, 5.0, 3.3, [
-        [("Lata 0-2: budowa", True, AMBER)], [(f"Marża 15%: {mln(s1[7],1)}. Dopłaca 24,5% startu spółki.", False, TXT)],
-        [("Lata 1-5: usługi", True, MBLUE)], [(f"Marża 15% co roku: {mln(s2[7],1)} w 5 lat.", False, TXT)],
-        [("Lata 1-5: licencja", True, MBLUE)], [(f"{lic_txt}: {mln(s3[7],1)} w 5 lat.", False, TXT)],
-        [("Od roku 3: udział w spółce", True, GREEN)], [(f"24,5% gotówki: {mln(s4[7],1)} netto (w roku 5: {mln(s4[6],1)}).", False, TXT)]], 12)
-partner_slide(T, "Partner Technologiczny: z czego i kiedy zarabia", MBLUE,
-              ["1. Marża 15% na budowie (lata 0-2)", "2. Marża 15% na utrzymaniu (lata 1-5)", "3. Licencja za silnik (3 zł / użytkownik / rok)", "4. Udział 24,5% w gotówce spółki (dopłata na start, potem dywidenda)"])
-partner_slide(MP, "Partner Marketplace / Handel: z czego i kiedy zarabia", LBLUE,
-              ["1. Marża 15% na dostosowaniu (lata 0-2)", "2. Marża 15% na operacjach (lata 1-5)", "3. Licencja za marketplace (0,5% GMV 3P)", "4. Udział 24,5% w gotówce spółki (dopłata na start, potem dywidenda)"])
+        [("Rok 0-1: wkład", True, RED)], [(f"Praca z własnych zasobów: {mln(-s0[7],1)}. Dopłaty na start spółki, które wracają w latach 3-4.", False, TXT)],
+        [("Od roku 1: licencja " + ("za silnik" if "Techn" in title else "za marketplace"), True, MBLUE)], [(f"{lic_txt}: {mln(s2[7],1)} w 5 lat.", False, TXT)],
+        [("Od roku 1: usługi", True, MBLUE)], [(f"Marża 15%: {mln(s1[7],1)} w 5 lat.", False, TXT)],
+        [("Od roku 4: dywidenda", True, GREEN)], [(f"{sh_txt} zysku: {mln(s4[7],1)} (w roku 5: {mln(s4[6],1)}).", False, TXT)]], 12)
+partner_slide(T, "Partner Technologiczny: z czego i kiedy zarabia",
+              ["0. Wkład własny: dopracowanie GAia z własnych zasobów", "1. Marża 15% na usługach (lata 1-5)", "2. Licencja za silnik (10 zł / użytkownik / rok)", "3. Dopłaty na start spółki i ich zwrot", "4. Dywidenda: 40% zysku spółki"],
+              "10 zł za użytkownika rocznie", "40%")
+partner_slide(MP, "Partner Marketplace / Handel: z czego i kiedy zarabia",
+              ["0. Wkład własny: dopracowanie GAia z własnych zasobów", "1. Marża 15% na usługach (lata 1-5)", "2. Licencja za marketplace (1% GMV 3P)", "3. Dopłaty na start spółki i ich zwrot", "4. Dywidenda: 26% zysku spółki"],
+              "1% obrotu innych produktów", "26%")
 
-# ===== 13. Grupa Azoty =====
+# ===== 14. Grupa Azoty =====
 gl = [("Udział w rynku AN/CAN", "Udział w rynku AN/CAN: p.p. × 39 mln zł × 25% marży"), ("Niższy koszt kanału", "Niższy koszt kanału: GMV nawozów × 2%"), ("Lepszy mix", "Poprawa mixu: GMV nawozów × 1%"),
-      ("Prowizja dla spółki", "Prowizja dla spółki GAia: GMV nawozów × 1,2%"), ("SAP/CRM, 5 funkcjonalności", "Integracja SAP/CRM (CAPEX GA) i utrzymanie 5 funkcjonalności"),
-      ("51% gotówki spółki", "51% gotówki spółki GAia (dopłata na start, potem dywidenda)")]
+      ("Prowizja dla spółki", "Prowizja dla spółki GAia od sprzedanych nawozów: × 1,2%"), ("Dywidenda 34%", "Dywidenda: 34% zysku spółki GAia")]
 gres = G["WYNIK GRUPY AZOTY"]
-sl = frame("Grupa Azoty: skąd bierze się zysk", f"Wynik GA w roku 5: {mln(gres[6],1)}. W 5 lat: {mln(gres[7],1)}, NPV {mln(k(GA)[8],1)}, zwrot w {k(GA)[10]}.")
+sl = frame("Grupa Azoty: zysk bez wkładu pieniężnego", f"Wynik GA w roku 5: {mln(gres[6],1)}. W 5 lat: {mln(gres[7],1)}, NPV {mln(k(GA)[8],1)}. Na plusie od roku 1.")
 pill(sl, 0.6, 1.25, 6.6, 0.42, "Składniki wyniku GA w roku 5, mln zł")
 c = chart(sl, XL_CHART_TYPE.BAR_CLUSTERED, 0.6, 1.75, 6.6, 4.3, [a for a, _ in gl][::-1], [("Rok 5", [round(G[b][6], 1) for _, b in gl][::-1])], [NAVY], labels=True, numfmt='#,##0.0')
 for i, (_, b) in enumerate(gl[::-1]):
     pt = c.series[0].points[i]; pt.format.fill.solid(); pt.format.fill.fore_color.rgb = GREEN if G[b][6] > 0 else RED
 pill(sl, 7.5, 1.25, 5.2, 0.42, "Wynik GA rok po roku, mln zł")
 chart(sl, XL_CHART_TYPE.COLUMN_CLUSTERED, 7.5, 1.75, 5.2, 4.3, Y05, [("Wynik GA", [round(x, 1) for x in gres[1:7]])], [NAVY], labels=True, numfmt='#,##0.0')
-msg(sl, [("Jak Yara i BASF: ", True, WHITE), ("GA zarabia przede wszystkim na sprzedaży własnych produktów, a platforma tę sprzedaż zwiększa.", False, WHITE)], y=6.3)
+msg(sl, [("GA wnosi produkt, dane i ARiMR, a nie pieniądze. ", True, WHITE), ("Jak Yara i BASF zarabia na sprzedaży własnych produktów, a platforma tę sprzedaż zwiększa.", False, WHITE)], y=6.3)
 
-# ===== 14. Każdy partner zyskuje =====
-sl = frame("Każdy partner zyskuje, także w wariancie ostrożnym", "Gotówka, mln zł. Wariant ostrożny: 150 tys. użytkowników w roku 5 zamiast 300 tys.")
+# ===== 15. Każdy partner zyskuje =====
+sl = frame("Każdy partner zyskuje", "Gotówka, mln zł. Wariant ostrożny: 150 tys. użytkowników w roku 5 zamiast 300 tys.")
 data = [["Partner", "Rok 0", "Rok 1", "Rok 2", "Rok 3", "Rok 4", "Rok 5", "Suma 5 lat", "Zwrot od", "Przy 150 tys.\nużytkowników"]]
 for nm in (GA, TP, MPk, JV):
     r, rs = k(nm), ks(nm)
     data.append([nm.replace(" - przepływy pieniężne", " (gotówka)")] + [(fmt(x, 1), sign(x)) for x in r[1:8]] + [r[10], (mln(rs[7], 1), sign(rs[7]))])
 table(sl, 0.6, 1.3, 12.1, data, [3.3, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 1.2, 1.1, 1.7], rh=0.6, size=12.5, hl_rows=(1,))
-tb(sl, 0.6, 4.6, 12.1, 1.3, [[("Uczciwie: ", True, NAVY), (f"przy połowie użytkowników Partner Marketplace wychodzi w 5 lat na niewielki plus (+{mln(ks(MPk)[7],1)}), a sama spółka GAia nie zwraca się w 5 lat. Partnerzy i tak nie tracą, bo mają marżę na usługach i licencje. Wtedy zmniejszamy zespół rozwoju i marketing.", False, TXT)]], 12.5)
-msg(sl, [("Każdy zarabia na tym, co wnosi. ", True, WHITE), ("Nikt nie płaci za coś, czego drugi nie dowiózł.", False, WHITE)], y=6.3)
+tb(sl, 0.6, 4.6, 12.1, 1.3, [[("Uczciwie: ", True, NAVY), (f"przy połowie użytkowników partnerzy technologiczni wychodzą w 5 lat tylko lekko na plus (PT +{mln(ks(TP)[7],1)}, PM +{mln(ks(MPk)[7],1)}), a dopłaty wracają później. Dlatego w umowie: zespół rozwoju i marketing dopasowane do liczby użytkowników po pilocie.", False, TXT)]], 12.5)
+msg(sl, [("Każdy zarabia na tym, co wnosi. ", True, WHITE), ("GA bez ryzyka finansowego, partnerzy z licencjami do własnych silników.", False, WHITE)], y=6.3)
 
 # ===== 11. Lekcje i Polska =====
 sl = frame("Czego uczą porażki i dlaczego GAia jest inna")
@@ -368,28 +391,28 @@ box(sl, 4.7, 1.2, 3.9, 4.35, line=AMBER); pill(sl, 4.7, 1.2, 3.9, 0.5, "DeHaat, 
 tb(sl, 4.8, 1.8, 3.7, 3.7, ["• Platforma: środki produkcji, skup, doradztwo", "• Przychód ok. 2 700 cr INR (FY24), +36-40% r/r", "• Strata operacyjna ok. 245 cr INR (FY24)",
                            [("Lekcja: ", True, AMBER), ("skala przychodzi szybko, ale model z własnym magazynem i skupem długo traci.", False, TXT)]], 12.5)
 box(sl, 8.8, 1.2, 3.9, 4.35, line=GREEN); pill(sl, 8.8, 1.2, 3.9, 0.5, "GAia, Polska", fill=GREEN)
-tb(sl, 8.9, 1.8, 3.7, 3.7, ["• Producent, produkcja i logistyka w jednej Grupie", "• Sieć sprzedaży GA i 66 punktów wydania, bez nowych magazynów",
-                           "• Gotowy marketplace partnera i 5 funkcjonalności GA", "• 1,21 mln rolników w ARiMR, brak lidera platform zakupowych",
+tb(sl, 8.9, 1.8, 3.7, 3.7, ["• Producent, produkcja, logistyka i dane ARiMR", "• Sieć sprzedaży GA i punkty wydania, bez nowych magazynów",
+                           "• Gotowe silniki partnerów i 5 funkcjonalności GA", "• 1,21 mln rolników w ARiMR, brak lidera platform zakupowych",
                            [("Wniosek: ", True, GREEN), ("mamy to, czego zabrakło Agrando, bez kosztów DeHaat.", False, TXT)]], 12.5)
 tb(sl, 0.6, 5.62, 12.1, 0.6, "Źródła: agfundernews.com, CB Insights (Agrando); entrackr.com, inc42.com (DeHaat); ARiMR 2024 via wiescirolnicze.pl. Dla Partnera Marketplacowego: ERLI urósł z 1,23 do ok. 1,8 mld zł GMV (2024→2025).", 10, False, GREY)
 msg(sl, [("Ryzyko jest w wykonaniu, nie w modelu: ", True, WHITE), ("musimy dowieźć adopcję rolników. Dlatego pilot przed skalowaniem.", False, WHITE)], y=6.3)
 
 
 
-# ===== 16. Ryzyka i kroki =====
+# ===== 17. Ryzyka i kroki =====
 sl = frame("Ryzyka, warunki umów i dalsze kroki")
 data = [["Ryzyko", "Co robimy"],
-        ["Za mało użytkowników", "Wariant 150 tys. nadal na plusie dla partnerów. Zespół rozwoju i marketing dopasowane do adopcji (w umowie)."],
-        ["Spór między wspólnikami", "GA 51%, sprawy zastrzeżone jednomyślnie, eskalacja i mediacja, opcja wykupu po 3 latach."],
-        ["Partner bierze za dużo", "Usługi koszt + 15% z audytem kosztów. Licencje z góry ustalone: 3 zł / użytkownik, 0,5% GMV 3P."],
-        ["Uzależnienie od technologii", "Kod stworzony w spółce i dane rolników należą do spółki GAia. Licencje na silnik i marketplace długoterminowe."]]
+        ["Za mało użytkowników", "Pilot przed skalowaniem. Zespół rozwoju i marketing dopasowane do adopcji (w umowie)."],
+        ["Spór między wspólnikami", "Sprawy zastrzeżone jednomyślnie, GA 34% blokuje zmiany umowy spółki, eskalacja i mediacja."],
+        ["Jakość 5 funkcjonalności GA", "Audyt na Azure w pierwszych 30 dniach, potem podłączenie przez API."],
+        ["Uzależnienie od technologii", "Kod stworzony w spółce i dane rolników należą do GAia. Licencje na silnik i marketplace długoterminowe."]]
 table(sl, 0.6, 1.2, 6.4, data, [2.0, 4.4], rh=0.72, size=11.5)
-data = [["Termin", "Krok"], ["do 30.11", "Potwierdzić 5 funkcjonalności, dane GA i wycenę wkładów"],
-        ["do 15.12", "Term sheet: Partner Technologiczny (24,5%, koszt + 15%, licencja 3 zł)"],
-        ["do 15.12", "Term sheet: Partner Marketplace (24,5%, koszt + 15%, licencja 0,5%)"],
-        ["01.2027", "Umowa wspólników i decyzja Zarządu GA"],
+data = [["Termin", "Krok"], ["do 30.11", "Audyt 5 funkcjonalności GA na Azure, potwierdzenie danych"],
+        ["do 15.12", "Term sheet z Partnerem Technologicznym: 40%, licencja 10 zł, koszt + 15%"],
+        ["do 15.12", "Term sheet z Partnerem Marketplace: 26%, plug-in, licencja 1%"],
+        ["01.2027", "Umowa wspólników, start prac (rok 0)"],
         ["02-04.2027", "Pilot w sezonie: 1 województwo, cel 10 tys. użytkowników"]]
 table(sl, 7.2, 1.2, 5.5, data, [1.3, 4.2], rh=0.6, size=11.5)
-msg(sl, [("Prosimy o: ", True, WHITE), ("zgodę na term sheety z obydwoma partnerami i przygotowanie pilota przed sezonem wiosennym 2027.", False, WHITE)], y=6.3)
+msg(sl, [("Prosimy o: ", True, WHITE), ("zgodę na term sheety z obydwoma partnerami. GA nie angażuje gotówki.", False, WHITE)], y=6.3)
 
 prs.save("../GA_GAia_business_case_300k.pptx"); print("ok", N[0], "slajdów")
