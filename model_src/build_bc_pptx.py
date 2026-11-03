@@ -17,11 +17,16 @@ KZ, KZs = rows(wb, "Każdy zyskuje"), rows(st, "Każdy zyskuje")
 U = rows(wb, "Użytkownicy i GMV"); J = rows(wb, "Spółka GAia (JV)"); T = rows(wb, "Partner Technologiczny")
 MP = rows(wb, "Partner Marketplacowy"); D = rows(wb, "Dystrybutorzy (66)"); F = rows(wb, "Rolnik"); G = rows(wb, "Grupa Azoty")
 
-NAVY = RGBColor(0x00, 0x36, 0x65); TXT = RGBColor(0x1A, 0x1A, 0x1A); GREY = RGBColor(0x59, 0x59, 0x59)
-RED = RGBColor(0xE3, 0x06, 0x13); GREEN = RGBColor(0x00, 0x8A, 0x3E); LIGHT = RGBColor(0xEA, 0xF0, 0xF7)
+NAVY = RGBColor(0x00, 0x36, 0x65); TXT = RGBColor(0x00, 0x36, 0x65); GREY = RGBColor(0x59, 0x59, 0x59)
+RED = RGBColor(0xFF, 0x00, 0x00); GREEN = RGBColor(0x00, 0x8A, 0x3E); LIGHT = RGBColor(0xEA, 0xF0, 0xF7)
 WHITE = RGBColor(0xFF, 0xFF, 0xFF); LBLUE = RGBColor(0x6F, 0x9F, 0xD8); MBLUE = RGBColor(0x2E, 0x6D, 0xB4)
 AMBER = RGBColor(0xE6, 0x7E, 0x00); PALE = RGBColor(0xB4, 0xCB, 0xE8)
 
+FONT = "Trebuchet MS"
+def content(y): return 1.15 <= y < 6.6
+def ty(y): return 1.4 + (y - 1.2) * 0.911 if content(y) else y
+def th(y, h): return h * 0.911 if content(y) else h
+def fs(y): return 0.93 if content(y) else 1.0
 prs = Presentation(); prs.slide_width = Inches(13.333); prs.slide_height = Inches(7.5)
 def fmt(v, d=0):
     s = f"{v:,.{d}f}".replace(",", " ").replace(".", ",")
@@ -29,18 +34,18 @@ def fmt(v, d=0):
 def mln(v, d=0): return f"{fmt(v, d)} mln zł"
 
 def tb(sl, x, y, w, h, text, size=14, bold=False, color=TXT, align=PP_ALIGN.LEFT, anchor=MSO_ANCHOR.TOP):
-    s = sl.shapes.add_textbox(Inches(x), Inches(y), Inches(w), Inches(h)); tf = s.text_frame
+    f_ = fs(y); s = sl.shapes.add_textbox(Inches(x), Inches(ty(y)), Inches(w), Inches(th(y, h))); tf = s.text_frame
     tf.word_wrap = True; tf.vertical_anchor = anchor
     tf.margin_left = tf.margin_right = Inches(0.06); tf.margin_top = tf.margin_bottom = Inches(0.03)
     paras = text if isinstance(text, list) else [text]
     for i, p in enumerate(paras):
         para = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
         for t, b, c in (p if isinstance(p, list) else [(p, bold, color)]):
-            r = para.add_run(); r.text = t; r.font.size = Pt(size); r.font.bold = b; r.font.color.rgb = c; r.font.name = "Calibri"
+            r = para.add_run(); r.text = t; r.font.size = Pt(round(size * f_ * 2) / 2); r.font.bold = b; r.font.color.rgb = c; r.font.name = FONT
         para.alignment = align; para.space_after = Pt(3)
     return s
 def box(sl, x, y, w, h, fill=None, line=None, shape=MSO_SHAPE.ROUNDED_RECTANGLE):
-    s = sl.shapes.add_shape(shape, Inches(x), Inches(y), Inches(w), Inches(h))
+    s = sl.shapes.add_shape(shape, Inches(x), Inches(ty(y)), Inches(w), Inches(th(y, h)))
     if shape == MSO_SHAPE.ROUNDED_RECTANGLE: s.adjustments[0] = 0.07
     if fill: s.fill.solid(); s.fill.fore_color.rgb = fill
     else: s.fill.background()
@@ -52,19 +57,20 @@ def pill(sl, x, y, w, h, text, size=13, fill=NAVY):
     box(sl, x, y, w, h, fill=fill); tb(sl, x, y, w, h, text, size, True, WHITE, PP_ALIGN.CENTER, MSO_ANCHOR.MIDDLE)
 def msg(sl, text_runs, y=6.3, fill=NAVY):
     box(sl, 0.6, y, 12.1, 0.55, fill=fill)
-    tb(sl, 0.75, y, 11.9, 0.55, [text_runs], 14.5, anchor=MSO_ANCHOR.MIDDLE)
+    tb(sl, 0.75, y, 11.9, 0.55, [text_runs], 14, anchor=MSO_ANCHOR.MIDDLE)
 N = [0]
 def frame(title, sub=None):
     N[0] += 1
     sl = prs.slides.add_slide(prs.slide_layouts[6])
-    tb(sl, 0.6, 0.3, 12.2, 0.7, title, 28, True, NAVY)
-    if sub: tb(sl, 0.6, 0.92, 12.2, 0.4, sub, 14, False, GREY)
-    box(sl, 0, 6.95, 13.333, 0.55, fill=NAVY, shape=MSO_SHAPE.RECTANGLE)
-    sl.shapes.add_picture("logo_ga.png", Inches(12.0), Inches(6.97), height=Inches(0.5))
-    tb(sl, 0.6, 7.03, 10.5, 0.4, f"GAia | business case 300 tys. użytkowników | liczby ilustracyjne z modelu GA_GAia_business_case_300k.xlsx, do potwierdzenia   {N[0]}", 10, False, WHITE)
+    tb(sl, 0.66, 0.45, 12.0, 0.65, title, 28, True, NAVY, anchor=MSO_ANCHOR.MIDDLE)
+    if sub: tb(sl, 0.7, 1.0, 12.0, 0.36, sub, 12.5, False, NAVY)
+    box(sl, 0, 6.66, 13.333, 0.84, fill=NAVY, shape=MSO_SHAPE.RECTANGLE)
+    sl.shapes.add_picture("logo_ga.png", Inches(12.0), Inches(6.82), height=Inches(0.5))
+    tb(sl, 0.66, 6.95, 10.8, 0.35, f"GAia | business case 300 tys. użytkowników | liczby ilustracyjne z modelu, do potwierdzenia   {N[0]}", 9, False, WHITE)
     return sl
 def table(sl, x, y, w, data, widths, rh=0.42, size=12, hl_rows=(), first_left=True, hdr_fill=NAVY):
-    t = sl.shapes.add_table(len(data), len(data[0]), Inches(x), Inches(y), Inches(w), Inches(rh * len(data))).table
+    f_ = fs(y); rh = th(y, rh); size = round(size * f_ * 2) / 2
+    t = sl.shapes.add_table(len(data), len(data[0]), Inches(x), Inches(ty(y)), Inches(w), Inches(rh * len(data))).table
     for i, cw in enumerate(widths): t.columns[i].width = Inches(cw)
     for r, row in enumerate(data):
         t.rows[r].height = Inches(rh)
@@ -79,13 +85,14 @@ def table(sl, x, y, w, data, widths, rh=0.42, size=12, hl_rows=(), first_left=Tr
             for j, line in enumerate(str(val).split("\n")):
                 p = tf.paragraphs[0] if j == 0 else tf.add_paragraph()
                 p.alignment = PP_ALIGN.LEFT if (c == 0 and first_left) else PP_ALIGN.CENTER
-                rr = p.add_run(); rr.text = line; rr.font.size = Pt(size); rr.font.name = "Calibri"; rr.font.bold = bold
+                rr = p.add_run(); rr.text = line; rr.font.size = Pt(size); rr.font.name = FONT; rr.font.bold = bold
                 rr.font.color.rgb = WHITE if r == 0 else color
     return t
 def chart(sl, kind, x, y, w, h, cats, series, colors, legend=True, labels=False, numfmt='#,##0'):
     cd = CategoryChartData(); cd.categories = cats
     for name, vals in series: cd.add_series(name, vals)
-    ch = sl.shapes.add_chart(kind, Inches(x), Inches(y), Inches(w), Inches(h), cd).chart
+    ch = sl.shapes.add_chart(kind, Inches(x), Inches(ty(y)), Inches(w), Inches(th(y, h)), cd).chart
+    ch.font.name = FONT; ch.font.color.rgb = NAVY
     ch.has_legend = legend and len(series) > 1
     if ch.has_legend:
         ch.legend.position = XL_LEGEND_POSITION.BOTTOM; ch.legend.include_in_layout = False; ch.legend.font.size = Pt(10.5)
@@ -115,8 +122,8 @@ pen = U["Nawozy przez platformę / sprzedaż krajowa GA"]; buy = U["Aktywni kupu
 rev = J["PRZYCHODY RAZEM"]; jvres = J["WYNIK SPÓŁKI GAia"]
 
 # ===== 1. Teza =====
-sl = frame("GAia: 300 tys. rolników w 5 lat. Zarabia każdy, kto wnosi wkład",
-           "Grupa Azoty wnosi produkty, produkcję, logistykę, 66 dystrybutorów i 5 gotowych funkcjonalności. Partnerzy wnoszą technologię i handel.")
+sl = frame("300 tys. rolników w 5 lat: zarabia każdy",
+           "GA wnosi produkty, produkcję, logistykę, 66 AD i 5 funkcjonalności. Partnerzy: technologię i handel.")
 tiles = [(f"{fmt(users[6])} tys.", "użytkowników w roku 5"), (f"{fmt(gmv[6]/1000, 2)} mld zł", "obrotu na platformie w roku 5"),
          (mln(rev[6]), "przychodu platformy w roku 5"), ("5 z 5", "uczestników na plusie w 5 lat")]
 for i, (big, small) in enumerate(tiles):
@@ -189,7 +196,7 @@ msg(sl, [("Platforma zarabia na tym, co dobudowuje: ", True, WHITE), ("prowizje,
 
 # ===== 5. Partner Technologiczny =====
 cost = T["KOSZTY PARTNERA TECHNOLOGICZNEGO RAZEM"]; cpu = T["Koszt technologii na użytkownika (zł/rok)"]
-sl = frame("Partner Technologiczny: ile kosztuje go platforma i ile zarabia",
+sl = frame("Partner Technologiczny: koszty i zarobek",
            f"Koszt po jego stronie w 5 lat: {mln(cost[7])} (z budową). Koszt na użytkownika spada z {fmt(cpu[2])} zł do {fmt(cpu[6])} zł rocznie.")
 lines = [("Budowa platformy na silniku Partnera", "Budowa"), ("Zespół rozwoju", "Zespół rozwoju (30-35 FTE)"), ("Utrzymanie 24/7 i wsparcie", "Utrzymanie 24/7, SRE"),
          ("Chmura (stała + na użytkownika)", "Chmura"), ("Dane satelitarne i pogodowe", "Dane satelitarne i pogodowe"),
@@ -272,7 +279,7 @@ tb(sl, 0.6, 5.45, 12.1, 0.8, [[("Uczciwie: ", True, NAVY), ("w wariancie ostroż
 msg(sl, [("Każdy zarabia na tym, co wnosi. ", True, WHITE), ("Nikt nie płaci drugiemu za coś, czego ten nie dowiózł.", False, WHITE)], y=6.3)
 
 # ===== 10. Rynek potwierdza =====
-sl = frame("Rynek potwierdza: producenci budują platformy dla rolników", "Publiczne dane firm, stan na 11.2026.")
+sl = frame("Producenci już budują platformy dla rolników", "Publiczne dane firm, stan na 11.2026.")
 cases = [
  ("Yara", "Producent nawozów, jak GA", ["ok. 5 mln rolników korzysta z narzędzi cyfrowych Yara", "YaraPlus: platforma nawożenia, start w UK i Irlandii w 01.2026, z John Deere"], "Najbliższy odpowiednik GAia"),
  ("Yara × Agrofy", "Argentyna, marketplace agro", ["Yara prowadziła rundę 30 mln USD (2021), łącznie 66 mln USD", "ok. 150 tys. ofert, płatności i kredyty dla rolników"], "Producent nawozów inwestuje w marketplace"),
