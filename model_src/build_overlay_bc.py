@@ -6,8 +6,12 @@ from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
 from pptx.enum.shapes import MSO_SHAPE
 from pptx.enum.text import MSO_ANCHOR
-KZ = {r[0]: r for r in openpyxl.load_workbook(sys.argv[1], data_only=True)["Każdy zyskuje"].iter_rows(values_only=True) if r[0]}
-KS = {r[0]: r for r in openpyxl.load_workbook(sys.argv[2], data_only=True)["Każdy zyskuje"].iter_rows(values_only=True) if r[0]}
+def rows(p):
+    d = {}
+    for r in openpyxl.load_workbook(p, data_only=True)["Każdy zyskuje"].iter_rows(values_only=True):
+        if r[0] and r[0] not in d: d[r[0]] = r
+    return d
+KZ, KS = rows(sys.argv[1]), rows(sys.argv[2])
 f = lambda v, d=0: f"{v:,.{d}f}".replace(",", " ").replace(".", ",")
 FONT = "Trebuchet MS"
 RED = RGBColor(0xFF, 0, 0); GREEN = RGBColor(0x00, 0x8A, 0x3E); AMBER = RGBColor(0xE6, 0x7E, 0x00)
