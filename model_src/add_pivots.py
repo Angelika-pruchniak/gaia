@@ -29,14 +29,15 @@ sheets.insertNewByName("Tabele przestawne", idx)
 ps = sheets.getByName("Tabele przestawne")
 ps.getCellByPosition(0, 0).String = "Tabele przestawne: dane z arkusza Dane, mln zł"
 ps.getCellByPosition(0, 1).String = "Filtr 'Typ' u góry każdej tabeli można zmienić. Po zmianie założeń: Dane → Odśwież wszystko."
-pivots = [("Wynik uczestników (gotówka)", "Wynik uczestnika", 7), ("Przychody spółki GAia wg źródła", "Przychód spółki GAia", 7),
-          ("OPEX spółki GAia wg pozycji", "OPEX spółki GAia", 7), ("Spółka GAia: EBITDA, CAPEX, gotówka", "EBITDA, CAPEX, gotówka", 6),
-          ("Koszty Partnera Technologicznego (CAPEX + OPEX)", "Koszt Partnera Technologicznego", 8), ("Z czego zarabia Partner Technologiczny", "Zarobek Partnera Technologicznego", 4),
-          ("Partner Marketplacowy: przychody i koszty", "Partner Marketplacowy", 6), ("GMV platformy", "GMV", 3)]
+pivots = [("Wynik partnerów (gotówka)", "Wynik partnera", 5), ("Przychody spółki GAia wg źródła", "Przychód spółki GAia", 7),
+          ("OPEX spółki GAia wg pozycji", "OPEX spółki GAia", 9), ("Spółka GAia: EBITDA, CAPEX, gotówka", "EBITDA, CAPEX, gotówka", 6),
+          ("Koszty Partnera Technologicznego", "Koszt Partnera Technologicznego", 8), ("Z czego zarabia Partner Technologiczny", "Zarobek Partnera Technologicznego", 5),
+          ("Koszty Partnera Marketplace", "Koszt Partnera Marketplace", 4), ("Z czego zarabia Partner Marketplace", "Zarobek Partnera Marketplace", 5),
+          ("Z czego zarabia Grupa Azoty", "Wynik Grupy Azoty", 7), ("GMV platformy", "GMV", 3)]
 row = 3
 tables = ps.getDataPilotTables(); placed = []
 for i, (title, typ, n) in enumerate(pivots):
-    row = 3 + (i // 2) * 55; col = 0 if i % 2 == 0 else 10
+    row = 3 + (i // 2) * 60; col = 0 if i % 2 == 0 else 10
     d = tables.createDataPilotDescriptor()
     ra = CellRangeAddress(); ra.Sheet = idx + 1; ra.StartColumn = 0; ra.StartRow = 3; ra.EndColumn = 4; ra.EndRow = last
     d.SourceRange = ra
@@ -45,7 +46,7 @@ for i, (title, typ, n) in enumerate(pivots):
     fp = f.getByIndex(2); fp.Orientation = ROW
     fy = f.getByIndex(3); fy.Orientation = COLUMN
     fv = f.getByIndex(4); fv.Orientation = DATA; fv.Function = SUM
-    d.setPropertyValue("ColumnGrand", typ not in ("EBITDA, CAPEX, gotówka",)); d.setPropertyValue("RowGrand", True)
+    d.setPropertyValue("ColumnGrand", typ not in ("EBITDA, CAPEX, gotówka", "Wynik partnera")); d.setPropertyValue("RowGrand", True)
     try: d.setPropertyValue("GrandTotalName", "Razem")
     except Exception as e: print("gt", e)
     try: d.setPropertyValue("ShowFilterButton", False)
@@ -78,7 +79,7 @@ for i, (title, typ, n) in enumerate(pivots):
 from com.sun.star.sheet.CellFlags import VALUE, STRING, FORMULA, DATETIME
 for dp, title, r0, c0 in placed:
     out = dp.OutputRange
-    endr = r0 + 54
+    endr = r0 + 59
     if out.EndRow + 1 <= endr:
         ps.getCellRangeByPosition(c0, out.EndRow + 1, c0 + 8, endr).clearContents(VALUE | STRING | FORMULA | DATETIME)
     ps.getCellByPosition(c0, r0).String = f"{placed.index((dp, title, r0, c0)) + 1}. {title}"
