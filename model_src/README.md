@@ -17,3 +17,9 @@ Liczby na slajdach pochodzą wyłącznie z modelu. Po podmianie założeń na da
 ## Excel: formatowanie i tabele przestawne
 - `build_bc_xlsx.py` wykonuje na końcu `xlsx_finish.py`: opisy „Jak liczone / skąd”, komentarze w komórkach, arkusz Dane, spis treści, legenda, formatowanie bez siatki.
 - Po `add_stress_bc.py` uruchom `python3 add_pivots.py ../GA_GAia_business_case_300k.xlsx` (LibreOffice + uno): tworzy 8 tabel przestawnych na arkuszu „Tabele przestawne”.
+
+## Model wspólnej puli przychodów (rekomendacja strategiczna)
+1. `python3 build_jr_xlsx.py` → `../GA_GAia_model_wspolnej_puli.xlsx` (3 scenariusze, klucz podziału, pula, etapy, case study).
+2. `python3 add_scenarios.py <katalog_roboczy>` → wypełnia arkusz Scenariusze (3 przeliczenia w LibreOffice).
+3. `python3 add_pivots_jr.py ../GA_GAia_model_wspolnej_puli.xlsx` → 8 tabel przestawnych.
+4. `python3 build_jr_pptx.py ../GA_GAia_model_wspolnej_puli.xlsx` → `../GA_GAia_wspolna_pula.pptx`; `python3 build_overlay_jr.py ../GA_GAia_model_wspolnej_puli.xlsx` → `../GA_GAia_prezentacja_wspolna_pula.pptx` (ze slajdem 30.10).
