@@ -102,7 +102,8 @@ TOC_ITEMS = [("Każdy partner zyskuje", "Wynik partnerów w wybranym scenariuszu
              ("Rynek i GMV", "Użytkownicy, GMV, nawozy GA"), ("Koszty platformy", "Koszty jak w modelu GA i w partnerstwie (synergie)"),
              ("Wspólna pula", "Przychody, koszty, EBITDA, deficyt, zwrot, podział"), ("Grupa Azoty", "Dodatkowa marża, opłata za sukces, wynik"),
              ("Partner Technologiczny", "Wkład, koszty, wynik"), ("Partner Marketplace", "Wkład, koszty, wynik"), ("Tabele przestawne", "Tabele przestawne na arkuszu Dane"),
-             ("Dane", "Dane źródłowe tabel przestawnych"), ("Case study i benchmarki", "Nutrien, Syngenta MAP, Starbucks × PepsiCo, Bosch × BASF, Bayer × Microsoft, Yara × Agrofy, Allegro")]
+             ("Dane", "Dane źródłowe tabel przestawnych"), ("Case study i benchmarki", "Bushel, xFarm × Yara, Żabka × AiFi, Yara × Oxbury, PepsiCo × Yara, Bosch × BASF, venture studia"),
+             ("Dofinansowania", "FENG SMART, Horizon Europe, Digital Europe, EIT Food, Innovation Fund, NFOŚiGW, ekoschemat, CBAM"), ("Dekarbonizacja", "Jak GAia zmniejsza emisje i jak to mierzyć")]
 for i, (nm, desc) in enumerate(TOC_ITEMS):
     c = TOC.cell(5 + i, 1, nm); c.hyperlink = f"#'{nm}'!A1"; TOC.cell(5 + i, 2, desc)
 lg = 5 + len(TOC_ITEMS) + 1; TOC.cell(lg, 1, "Legenda")
@@ -123,11 +124,12 @@ finish(S3, [(4, 4 + len(SCEN_ROWS), 1, 5)], tab="008A3E")
 finish(K, [(4, 4 + len(KEYS), 1, 6)], tab="E67E00")
 for r in range(5, 5 + len(KEYS)): K.cell(r, 6).alignment = Alignment(wrap_text=True, vertical="center"); K.row_dimensions[r].height = 30
 finish(C, [(4, mvp_tot, 1, 7)], tab="E67E00")
-for ws_, last_ in ((WSP, WSP_last), (WKP, WKP_last), (UW, UW_last), (BM, BM_last)):
+for ws_, last_ in ((WSP, WSP_last), (WKP, WKP_last), (UW, UW_last), (BM, BM_last), (FD, FD_last), (DK, DK_last)):
     finish(ws_, [(4, last_, 1, ws_.max_column)], tab="6F9FD8")
     for r in range(5, last_ + 1):
         for c in range(1, ws_.max_column + 1): ws_.cell(r, c).alignment = Alignment(wrap_text=True, vertical="top", horizontal="left")
-for r in range(5, BM_last + 1): BM.row_dimensions[r].height = 60; BM.cell(r, 6).font = Font(name=FONT, size=9, color="0563C1", underline="single")
+for ws_, last_ in ((BM, BM_last), (FD, FD_last)):
+    for r in range(5, last_ + 1): ws_.row_dimensions[r].height = 60; ws_.cell(r, 6).font = Font(name=FONT, size=9, color="0563C1", underline="single")
 for r in range(5, WKP_last + 1): WKP.row_dimensions[r].height = 62
 finish(DS, [], tab="BFBFBF")
 for c in range(1, 7): DS.cell(4, c).font = Font(name=FONT, bold=True, color="FFFFFF", size=10)
@@ -138,5 +140,5 @@ for i, (t, fnt, fil, d) in enumerate(legend):
     c = TOC.cell(lg + 1 + i, 1); c.font = fnt; c.border = Border(left=thin, right=thin, top=thin, bottom=thin)
     if fil: c.fill = fil
 ORDER = ["Spis treści", "Każdy partner zyskuje", "Scenariusze", "Model współpracy", "Wkład partnerów", "Uwagi do modelu GA", "Założenia", "Klucz podziału",
-         "Dopasowanie MVP1", "Rynek i GMV", "Koszty platformy", "Wspólna pula", "Grupa Azoty", "Partner Technologiczny", "Partner Marketplace", "Dane", "Case study i benchmarki"]
+         "Dopasowanie MVP1", "Rynek i GMV", "Koszty platformy", "Wspólna pula", "Grupa Azoty", "Partner Technologiczny", "Partner Marketplace", "Dane", "Case study i benchmarki", "Dofinansowania", "Dekarbonizacja"]
 wb._sheets = [wb[n] for n in ORDER]; wb.active = 0

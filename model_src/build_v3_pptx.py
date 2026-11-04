@@ -157,7 +157,7 @@ table(sl, 0.6, 1.2, 12.1, data, [2.3, 3.2, 3.4, 3.2], rh=0.47, size=9.5)
 msg(sl, [("Scenariusz agresywny = model GA 1:1 ", True, WHITE), ("(adopcja, udział w wydatkach, prowizje, koszty). Dodaliśmy bazowy i ostrożny.", False, WHITE)], y=6.3)
 
 # ===== 3. Model współpracy =====
-sl = frame("Model współpracy: role, pula, zasady", "Wzorzec: Starbucks × PepsiCo (od 1994), Bosch × BASF (alians 2019 → spółka 2021), Bayer × Microsoft (licencje)")
+sl = frame("Model współpracy: role, pula, zasady", "Wzorzec: Bushel (white-label dla sieci), xFarm × Yara (wiedza w silniku partnera), Bosch × BASF (współpraca 2019 → spółka 2021)")
 for i, (nm, col, txt) in enumerate([("Grupa Azoty", NAVY, "produkty, logistyka, dystrybutorzy, marka, nawozy.eu, ARiMR, 5 funkcjonalności"),
                                      ("Partner Technologiczny (SH)", MBLUE, "silnik na licencji, UX, grywalizacja, integracje, utrzymanie"),
                                      ("Partner Marketplace", LBLUE, "marketplace przez plug-in, sprzedawcy, płatności, operacje")]):
@@ -298,44 +298,69 @@ for i, (t, d, col) in enumerate(gates):
     box(sl, x, 1.8, 3.9, 0.95, fill=LIGHT); tb(sl, x + 0.1, 1.8, 3.7, 0.95, d, 11.5, True, NAVY, PP_ALIGN.CENTER, MSO_ANCHOR.MIDDLE)
 data = [["Ryzyko", "Co robimy"],
         ["Wolniejsza adopcja (ostrożny)", "Bramka 2 zatrzymuje projekt; maks. strata PT " + fmt(sc("PT: wynik po roku 2 (strata przy zatrzymaniu na bramce)")[0], 1) + ", PM " + fmt(sc("PM: wynik po roku 2 (strata przy zatrzymaniu na bramce)")[0], 1) + " mln zł; GA 0"],
-        ["Duże finansowanie startu przez partnerów", "Limit deficytu w budżecie; granty FENG / NCBR na rozwój; partner finansowy (bank) współfinansuje w zamian za wyłączność leadów kredytowych"],
+        ["Duże finansowanie startu przez partnerów", "Limit deficytu w budżecie; granty (FENG SMART, Horizon Europe, EIT Food) na model AI i pilot; bank jako partner finansowy (jak Oxbury u Yary)"],
         ["Partner zawyża koszty", "Koszty po koszcie, budżet roczny, audyt; nikt nie ma marży na kosztach"],
         ["Spór o podział", "Klucz w umowie, przegląd co 2 lata, eskalacja i mediacja"],
         ["Utrata kontroli nad danymi", "Zgody RODO rolnika; dane GAia w spółce; silniki i funkcjonalności u właścicieli; depozyt kodu"]]
 table(sl, 0.6, 2.95, 12.1, data, [3.6, 8.5], rh=0.5, size=11)
 msg(sl, [("GA ryzykuje tylko czas i dane. ", True, WHITE), ("Partnerzy ryzykują ograniczoną kwotę, bo każda bramka pozwala zatrzymać projekt.", False, WHITE)], y=6.3)
 
-# ===== 3. Case study: kanał cyfrowy producenta =====
-sl = frame("Case study: kanał cyfrowy producenta")
-cases = [("Nutrien Digital", "producent i dystrybutor nawozów, USA / Kanada", [">1,2 mld USD sprzedaży cyfrowej w 2020 r.", "4× więcej niż rok wcześniej", "ok. 19% sprzedaży w I poł. 2021"], "Producent nawozów sprzedaje cyfrowo dużą część wolumenu"),
-         ("Syngenta MAP", "producent ŚOR, Chiny", ["ok. 1,8 mld USD przychodu w 2021 r. (2×)", "492 → 638 centrów (2021 → 2023)", ">2 mln zarejestrowanych rolników"], "Platforma + sieć fizyczna rośnie szybko; u nas punkty wydania GA"),
-         ("Yara × Agrofy", "producent nawozów + marketplace, Ameryka Płd.", ["Yara prowadziła rundę 30 mln USD (2021)", "łącznie 66 mln USD finansowania", "płatności i kredyt dla rolników"], "Producent i marketplace łączą siły zamiast budować sami")]
+# ===== 14. Case study: rynek + technologia =====
+sl = frame("Case study: firma z rynkiem + partner z technologią", "Nikt nie wykładał milionów: każdy wniósł to, co już miał")
+cases = [("Bushel (USA)", "startup + spółdzielnie rolnicze", ["Aplikacja white-label pod marką spółdzielni, darmowa dla rolnika", "10 punktów na start → ok. 1 500 punktów skupu", "Przejął GrainBridge (JV ADM i Cargill)"], "Aplikacja pod marką GA dla sieci 66 dystrybutorów"),
+         ("xFarm × Yara (2023)", "startup z platformą + producent nawozów", ["Wiedza Yary o nawożeniu wbudowana w moduł xFarm", "xFarm: 300 tys. gospodarstw, 3 mln ha", "Bez nowej spółki i bez dużej inwestycji"], "5 funkcjonalności GA i nawozy.eu w silniku SH"),
+         ("Żabka × AiFi (Polska)", "korporacja + startup technologiczny", ["Żabka: koncept i sprzedaż (Żabka Future), AiFi: technologia", "25 sklepów Nano w 6 miesięcy", "Ponad 50 sklepów w 2023"], "GA daje rynek i klientów, partner technologię")]
 for i, (nm, what, pts, lesson) in enumerate(cases):
     x = 0.6 + i * 4.1
     box(sl, x, 1.2, 3.9, 0.8, fill=NAVY); tb(sl, x, 1.2, 3.9, 0.8, [[(nm, True, WHITE)], [(what, False, WHITE)]], 13, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-    box(sl, x, 2.05, 3.9, 2.4, line=NAVY); tb(sl, x + 0.1, 2.15, 3.7, 2.25, ["• " + p for p in pts], 13)
-    box(sl, x, 4.5, 3.9, 0.95, fill=LIGHT); tb(sl, x + 0.05, 4.5, 3.8, 0.95, lesson, 12.5, True, NAVY, PP_ALIGN.CENTER, MSO_ANCHOR.MIDDLE)
-tb(sl, 0.6, 5.55, 12.1, 0.5, "Źródła: Nutrien, wyniki 2020 (businesswire.com, 02.2021); Zacks (2021); Syngenta Group, wyniki 2021 i I kw. 2023 (syngentagroup.com, businesswire.com); agfundernews.com (12.2021).", 10, False, GREY)
-msg(sl, [("Wniosek: ", True, WHITE), ("producent, który łączy produkt, sieć fizyczną i platformę, wygrywa. Agrando bez producenta upadło.", False, WHITE)], y=6.3)
+    box(sl, x, 2.05, 3.9, 2.35, line=NAVY); tb(sl, x + 0.1, 2.15, 3.7, 2.2, ["• " + p for p in pts], 12.5)
+    box(sl, x, 4.45, 3.9, 0.95, fill=LIGHT); tb(sl, x + 0.05, 4.45, 3.8, 0.95, lesson, 12.5, True, NAVY, PP_ALIGN.CENTER, MSO_ANCHOR.MIDDLE)
+tb(sl, 0.6, 5.5, 12.1, 0.55, "Źródła: feedstuffs.com i agfundernews.com (Bushel); agritechtomorrow.com, xfarm.ag (xFarm × Yara, 11.2023); prnewswire.com, zabkagroup.com (Żabka Nano).", 10, False, GREY)
+msg(sl, [("Wniosek: ", True, WHITE), ("producent z siecią sprzedaży + gotowa technologia partnera skalują się szybko i tanio. Dokładnie tak budujemy GAia.", False, WHITE)], y=6.3)
 
-# ===== 4. Case study: jak dzielą się partnerzy =====
-sl = frame("Case study: jak partnerzy dzielą się przychodami")
-data = [["Współpraca", "Kto co wnosi", "Jak się dzielą", "Wynik"],
-        ["Starbucks × PepsiCo (NACP)", "Marka i produkt + dystrybucja", "Spółka 50/50 od 1994 r.", "Stworzyli rynek kawy gotowej do picia w USA"],
-        ["Bosch × BASF (ONE SMART SPRAY)", "Technologia + agronomia", "Współpraca 2019, spółka 50/50 w 2021", "System w maszynach Amazone, AGCO, CNH, Stara"],
-        ["Bayer × Microsoft", "Modele agronomiczne + chmura", "Każdy licencjonuje swoje rozwiązanie", "Usługi Bayer na Azure od 2023"],
-        ["Sklepy z aplikacjami (Apple, Google)", "Platforma + twórca aplikacji", "70% dla twórcy, 30% dla platformy", "Standard rynku aplikacji"],
-        ["Salesforce AppExchange", "Platforma + partner z aplikacją", "15% dla platformy, 85% dla partnera", "Standard rynku B2B"],
-        ["Allegro", "Marketplace + sprzedawcy", "Prowizja 12% + reklama ok. 2% obrotu", "Benchmark stawek w Polsce"]]
-table(sl, 0.6, 1.2, 12.1, data, [3.3, 3.0, 3.0, 2.8], rh=0.62, size=11.5)
-tb(sl, 0.6, 5.65, 12.1, 0.4, "Źródła: pepsico.com, bosch-presse.de (05.2024), basf.com, businesswire.com (Bayer, 03.2023), developer.salesforce.com, entrepreneur.com, about.allegro.eu.", 10, False, GREY)
-msg(sl, [("Wzorzec: ", True, WHITE), ("najpierw współpraca, potem spółka; każdy zostaje właścicielem swojej technologii; większość przychodu dla tego, kto tworzy wartość.", False, WHITE)], y=6.3)
+# ===== 15. Jak się dzielą bez pieniędzy =====
+sl = frame("Rozliczenie bez wkładu gotówki")
+data = [["Mechanizm", "Przykład", "Jak w GAia"],
+        ["Aplikacja white-label pod marką sieci sprzedaży", "Bushel × spółdzielnie (USA)", "GAia pod marką GA, dystrybutorzy odpowiadają na zapytania"],
+        ["Wiedza producenta w silniku partnera", "xFarm × Yara", "5 funkcjonalności GA, nawozy.eu, IUNG w silniku SH"],
+        ["Korporacja daje rynek, startup technologię", "Żabka × AiFi (Żabka Nano)", "GA: klienci, produkty, logistyka; SH i PM: technologia"],
+        ["Praca za udziały lub udział w przychodach", "Venture studia: The Heart, Daftcode", "SH i PM jako współwłaściciele GAia, nie dostawcy na godziny"],
+        ["Pieniądze od partnera finansowego", "Yara × Oxbury (bank dla rolników)", "Bank finansuje zakupy rolników w koszyku i współfinansuje start"],
+        ["Przetwórca płaci za niższy ślad węglowy", "PepsiCo × Yara (1 000 gospodarstw)", "Programy niskoemisyjne GA z przetwórcami przez GAia"],
+        ["Najpierw współpraca, potem spółka", "Bosch × BASF (2019 → 2021)", "Etap 1: umowa i pula, etap 2: spółka po bramce"],
+        ["Dotacja zamiast wkładu", "EIT Food, FENG SMART, Horizon Europe", "Granty na model AI i pilot zmniejszają deficyt partnerów"]]
+table(sl, 0.6, 1.2, 12.1, data, [4.2, 3.6, 4.3], rh=0.52, size=11)
+msg(sl, [("Wzorzec: ", True, WHITE), ("każdy wnosi to, co ma, i zarabia na wyniku. Pieniądze dokładają ci, dla których to biznes: bank, przetwórcy, programy UE.", False, WHITE)], y=6.3)
 
+# ===== 16. Dofinansowania =====
+sl = frame("Dofinansowania: kto może dołożyć pieniądze do GAia", "Stan 11.2026, do weryfikacji z doradcą grantowym. Nabory zmieniają terminy.")
+data = [["Źródło", "Na co", "Warunki / kwoty", "Termin", "Jak GAia się kwalifikuje"],
+        ["FENG Ścieżka SMART (NCBR)", "B+R, wdrożenie, cyfryzacja, zazielenienie", "Duża firma w konsorcjum z MŚP; do 150 mln zł; min. 3 mln zł B+R", "Nabór 2026 zamknięty; kolejny do obserwowania", "GA lider + SH (MŚP): model AI nawożenia"],
+        ["Horizon Europe, Klaster 6", "Cyfrowe i AI narzędzia do nawożenia", "ok. 6 mln EUR na projekt (FARM2FORK-01)", "23.09.2027", "GA + SH + IUNG / IOR-PIB; GAia jako demonstrator"],
+        ["Digital Europe: AgrifoodTEF", "Testy AI w rolnictwie w polu", "Usługi testowe; Polska węzłem", "2023-2027", "Walidacja modelu AI GAia"],
+        ["EIT Food", "Piloty startupów z korporacjami", "Granty bez oddawania udziałów", "Nabory co roku", "Spółka GAia / SH z GA jako partnerem"],
+        ["Innovation Fund, NFOŚiGW, KPO", "Dekarbonizacja produkcji", "Nabór IF 2025: 77 projektów, 3,4 mld EUR", "Nabory co roku", "Zakłady GA; GAia buduje popyt i dane"],
+        ["Ekoschemat: plan nawożenia (rolnik)", "Dopłata za plan nawożenia", "ok. 87,52 zł/ha (2025, dane wtórne)", "Kampania ARiMR", "Plan z GAia = dopłata dla rolnika = powód, by korzystać"]]
+table(sl, 0.6, 1.2, 12.1, data, [2.6, 2.4, 2.8, 1.8, 2.5], rh=0.6, size=10)
+msg(sl, [("Najlepsza droga: ", True, WHITE), ("GA jako lider konsorcjum z SH (MŚP) i instytutem (IUNG). Grant pokrywa model AI i pilot, czyli właśnie deficyt startu.", False, WHITE)], y=6.3)
 
+# ===== 17. Dekarbonizacja =====
+sl = frame("Dekarbonizacja: GAia jako dowód i argument", "To otwiera granty, programy z przetwórcami i ochronę przed CBAM")
+data = [["Mechanizm", "Jak działa w GAia", "Dowód / benchmark"],
+        ["Model AI precyzyjnego nawożenia", "Plan z paszportu pola, NDVI i danych ARiMR: mniej azotu tam, gdzie niepotrzebny", "Badania: 5-16% mniej N2O; Nutrient Expert: 12-20% niższy ślad w pszenicy"],
+        ["Więcej nawozów niskoemisyjnych", "Rekomendacje i promocje np. mocznika z inhibitorem (Pulrea +INu)", "Cel GA: −9% śladu węglowego do 2030 vs 2024"],
+        ["Dane o śladzie (MRV)", "Historia nawożenia w paszporcie pola, zgody rolnika", "PepsiCo × Yara: przetwórca płaci za niższy ślad"],
+        ["CBAM od 01.01.2026", "Import nawozów droższy, liczy się ślad węglowy", "Rabobank: amoniak +10-20%, mocznik +10-15% w 2026"],
+        ["Ekoschemat dla rolnika", "Plan nawożenia z GAia spełnia wymóg", "ok. 87,52 zł/ha (2025)"]]
+table(sl, 0.6, 1.2, 12.1, data, [3.0, 4.8, 4.3], rh=0.55, size=11)
+box(sl, 0.6, 4.75, 12.1, 0.95, fill=LIGHT)
+tb(sl, 0.75, 4.78, 11.8, 0.9, [[("Przykład skali (do policzenia z IUNG): ", True, NAVY), ("1 mln ha × 150 kg N/ha × 5% mniej azotu = 7,5 tys. t N rocznie. Przy założeniu ok. 8 kg CO2e na 1 kg N (produkcja + pole) to ok. 60 tys. t CO2e rocznie mniej.", False, TXT)]], 12.5, anchor=MSO_ANCHOR.MIDDLE)
+msg(sl, [("GAia sprzedaje więcej zielonych nawozów i mierzy efekt. ", True, WHITE), ("To warunek dla grantów, programów z przetwórcami i raportowania emisji GA.", False, WHITE)], y=6.3)
 
 # ===== 16. Kroki =====
 sl = frame("Dalsze kroki")
 data = [["Termin", "Krok", "Kto"], ["do 20.11", "Odpowiedzi SH na pytania PZ-01…PZ-49 i potwierdzenie dopasowania MVP1", "SH + zespół GAia"],
+        ["do 30.11", "Mapa dofinansowań z doradcą grantowym: konsorcjum GA + SH + IUNG (FENG, Horizon Europe, EIT Food)", "GA + doradca"],
         ["do 30.11", "Audyt 5 funkcjonalności GA na Azure; dane GA do modelu (marża, wolumen)", "GA IT + Kontroling"],
         ["do 15.12", "Term sheet: pula, klucz, opłata za sukces 25%, okres 10 + 5 lat, bramki", "GA + SH + Partner Marketplace"],
         ["01.2027", "Umowa partnerska (etap 1), start MVP1", "Zarząd GA"], ["02-04.2027", "Pilot MVP1 w sezonie wiosennym, bramka 1", "Wszyscy partnerzy"],
