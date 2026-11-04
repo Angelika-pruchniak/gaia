@@ -29,3 +29,10 @@ Liczby na slajdach pochodzą wyłącznie z modelu. Po podmianie założeń na da
 2. `python3 add_scenarios_v3.py <katalog_roboczy>` → arkusz Scenariusze.
 3. `python3 add_pivots_v3.py ../GA_GAia_model_wspolpracy_v3.xlsx` → 9 tabel przestawnych.
 4. `python3 build_v3_pptx.py ../GA_GAia_model_wspolpracy_v3.xlsx`, potem `python3 build_overlay_v3.py ../GA_GAia_model_wspolpracy_v3.xlsx` → `../GA_GAia_prezentacja_model_wspolpracy_v3.pptx`.
+
+## Model współpracy v4 (po uwagach GA z 04.11.2026)
+Zmiany: jedna ambicja zamiast 3 scenariuszy (adopcja = funkcja budżetu), CAC 250 zł bez synergii, back margin także od nawozów (nawozy i maszyny 1-1,5%), bez sprzedaży inkrementalnej i marży 25%, synergie zespołu i utrzymania „do dyskusji”.
+1. `python3 build_v4_xlsx.py` → `../GA_GAia_model_wspolpracy_v4.xlsx`.
+2. `python3 add_financing_v4.py <katalog_roboczy>` → arkusz Finansowanie (wrażliwość na CAC, ambicję, synergie).
+3. `python3 add_pivots_v4.py ../GA_GAia_model_wspolpracy_v4.xlsx` → tabele przestawne.
+4. `python3 build_v4_pptx.py ../GA_GAia_model_wspolpracy_v4.xlsx`, potem `python3 build_overlay_v4.py ../GA_GAia_model_wspolpracy_v4.xlsx` → `../GA_GAia_prezentacja_model_wspolpracy_v4.pptx`.
