@@ -23,3 +23,9 @@ Liczby na slajdach pochodzą wyłącznie z modelu. Po podmianie założeń na da
 2. `python3 add_scenarios.py <katalog_roboczy>` → wypełnia arkusz Scenariusze (3 przeliczenia w LibreOffice).
 3. `python3 add_pivots_jr.py ../GA_GAia_model_wspolnej_puli.xlsx` → 8 tabel przestawnych.
 4. `python3 build_jr_pptx.py ../GA_GAia_model_wspolnej_puli.xlsx` → `../GA_GAia_wspolna_pula.pptx`; `python3 build_overlay_jr.py ../GA_GAia_model_wspolnej_puli.xlsx` → `../GA_GAia_prezentacja_wspolna_pula.pptx` (ze slajdem 30.10).
+
+## Model współpracy v3 (na bazie GAia-model_PL_v2 i wymagań MVP1)
+1. `python3 build_v3_xlsx.py` → `../GA_GAia_model_wspolpracy_v3.xlsx` (7 lat, 3 scenariusze; agresywny = model GA, synergie, pula, klucz, dopasowanie MVP1, model współpracy, uwagi do modelu GA).
+2. `python3 add_scenarios_v3.py <katalog_roboczy>` → arkusz Scenariusze.
+3. `python3 add_pivots_v3.py ../GA_GAia_model_wspolpracy_v3.xlsx` → 9 tabel przestawnych.
+4. `python3 build_v3_pptx.py ../GA_GAia_model_wspolpracy_v3.xlsx`, potem `python3 build_overlay_v3.py ../GA_GAia_model_wspolpracy_v3.xlsx` → `../GA_GAia_prezentacja_model_wspolpracy_v3.pptx`.
