@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Guliwera – wygląd sklepu
  * Description: Strony produktów, koszyk, zamówienie i konto klienta w kolorach i układzie strony guliwera4.pl (nagłówek, menu i stopka jak na pozostałych podstronach). Zostaw włączoną.
- * Version: 1.0
+ * Version: 1.1
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
@@ -153,3 +153,39 @@ function gk_ss_css() {
 register_activation_hook( __FILE__, function () {
 	if ( function_exists( 'w3tc_flush_all' ) ) { w3tc_flush_all(); }
 } );
+
+/** Ustawienia sklepu dla Polski (raz, po aktualizacji wtyczki). */
+add_action( 'init', function () {
+	if ( '1.1' === get_option( 'gk_ss_ver' ) || ! function_exists( 'WC' ) ) { return; }
+	update_option( 'woocommerce_default_country', 'PL' );
+	update_option( 'woocommerce_default_customer_address', 'base' );
+	update_option( 'woocommerce_currency', 'PLN' );
+	update_option( 'woocommerce_currency_pos', 'right_space' );
+	update_option( 'woocommerce_price_thousand_sep', ' ' );
+	update_option( 'woocommerce_price_decimal_sep', ',' );
+	update_option( 'woocommerce_price_num_decimals', '2' );
+	update_option( 'woocommerce_checkout_address_2_field', 'hidden' );
+	update_option( 'woocommerce_checkout_phone_field', 'hidden' );
+	update_option( 'woocommerce_checkout_company_field', 'optional' );
+	update_option( 'gk_ss_ver', '1.1' );
+	if ( function_exists( 'w3tc_flush_all' ) ) { w3tc_flush_all(); }
+} );
+
+/** Same pliki do pobrania: bez adresu w zamówieniu (imię, nazwisko, e-mail, kraj zostają). */
+function gk_ss_hide_address( $loc ) {
+	foreach ( array( 'address_1', 'address_2', 'city', 'state', 'postcode' ) as $k ) {
+		$loc[ $k ] = array_merge( isset( $loc[ $k ] ) ? (array) $loc[ $k ] : array(), array( 'required' => false, 'hidden' => true ) );
+	}
+	return $loc;
+}
+add_filter( 'woocommerce_get_country_locale_default', 'gk_ss_hide_address', 99 );
+add_filter( 'woocommerce_get_country_locale_base', 'gk_ss_hide_address', 99 );
+add_filter( 'woocommerce_get_country_locale', function ( $all ) {
+	foreach ( $all as $c => $loc ) { $all[ $c ] = gk_ss_hide_address( $loc ); }
+	foreach ( array( 'PL', 'US', 'GB', 'DE' ) as $c ) { if ( ! isset( $all[ $c ] ) ) { $all[ $c ] = gk_ss_hide_address( array() ); } }
+	return $all;
+}, 99 );
+add_filter( 'woocommerce_billing_fields', function ( $f ) {
+	foreach ( array( 'billing_address_1', 'billing_address_2', 'billing_city', 'billing_state', 'billing_postcode' ) as $k ) { unset( $f[ $k ] ); }
+	return $f;
+}, 99 );
