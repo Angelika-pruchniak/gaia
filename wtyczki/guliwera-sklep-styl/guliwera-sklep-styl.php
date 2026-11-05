@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Guliwera – wygląd sklepu
  * Description: Strony produktów, koszyk, zamówienie i konto klienta w kolorach i układzie strony guliwera4.pl (nagłówek, menu i stopka jak na pozostałych podstronach). Zostaw włączoną.
- * Version: 1.1
+ * Version: 1.2
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
@@ -144,6 +144,8 @@ function gk_ss_css() {
 .gk .gk-wc .wc-block-cart__empty-cart__title,.gk .gk-wc .cart-empty{font-family:"Fraunces",serif;font-size:26px;text-align:center}
 .gk .gk-wc .wp-block-woocommerce-empty-cart-block .wp-block-separator,.gk .gk-wc .wp-block-woocommerce-empty-cart-block .wp-block-heading:not(.wc-block-cart__empty-cart__title),.gk .gk-wc .wp-block-woocommerce-empty-cart-block .wp-block-woocommerce-product-new{display:none}
 .gk .gk-pusty{text-align:center;margin-top:24px}
+.gk .gk-edytuj{margin:-14px 0 20px;font-size:16px}
+.gk .gk-edytuj a{color:var(--koral-ciemny);font-weight:700;text-decoration:none}
 .gk .gk-wc .woocommerce-MyAccount-navigation ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
 .gk .gk-wc .woocommerce-MyAccount-navigation a{display:block;padding:8px 16px;border-radius:999px;background:var(--krem);text-decoration:none;font-weight:700;color:var(--atrament)}
 .gk .gk-wc .woocommerce-MyAccount-navigation .is-active a{background:var(--koral);color:#fff}
@@ -189,3 +191,40 @@ add_filter( 'woocommerce_billing_fields', function ( $f ) {
 	foreach ( array( 'billing_address_1', 'billing_address_2', 'billing_city', 'billing_state', 'billing_postcode' ) as $k ) { unset( $f[ $k ] ); }
 	return $f;
 }, 99 );
+
+/** Każdy PDF tylko raz w koszyku: ustaw „sprzedawany pojedynczo” (raz, wersja 1.2). */
+add_action( 'init', function () {
+	if ( '1.2' === get_option( 'gk_ss_ver2' ) || ! function_exists( 'wc_get_product' ) ) { return; }
+	foreach ( array( 67, 68, 69, 70, 71, 72, 73 ) as $id ) {
+		$p = wc_get_product( $id );
+		if ( $p ) { $p->set_sold_individually( true ); $p->save(); }
+	}
+	update_option( 'gk_ss_ver2', '1.2' );
+	if ( function_exists( 'w3tc_flush_all' ) ) { w3tc_flush_all(); }
+}, 20 );
+
+/** Produkt już w koszyku: nie dodawaj drugi raz i nie pokazuj błędu. */
+add_filter( 'woocommerce_add_to_cart_validation', function ( $ok, $product_id ) {
+	if ( ! $ok || ! function_exists( 'WC' ) || ! WC()->cart ) { return $ok; }
+	foreach ( WC()->cart->get_cart() as $item ) {
+		if ( (int) $item['product_id'] === (int) $product_id ) { return false; }
+	}
+	return $ok;
+}, 1, 2 );
+
+/** Wyczyść ewentualne komunikaty „nie można dodać kolejnego” dla produktów pojedynczych. */
+add_filter( 'woocommerce_cart_product_cannot_add_another_message', '__return_empty_string' );
+
+/** Po dodaniu z linku ?add-to-cart przekieruj na czysty adres, żeby odświeżenie nic nie dodawało. */
+add_action( 'woocommerce_add_to_cart', function () {
+	if ( isset( $_GET['add-to-cart'] ) && ! wp_doing_ajax() && function_exists( 'wc_get_checkout_url' ) ) {
+		add_filter( 'woocommerce_add_to_cart_redirect', function () { return wc_get_checkout_url(); } );
+	}
+} );
+
+/** Napraw koszyki, w których PDF jest już 2 razy lub więcej: zostaw 1 sztukę. */
+add_action( 'woocommerce_cart_loaded_from_session', function ( $cart ) {
+	foreach ( $cart->get_cart() as $key => $item ) {
+		if ( $item['quantity'] > 1 ) { $cart->set_quantity( $key, 1, false ); }
+	}
+}, 20 );

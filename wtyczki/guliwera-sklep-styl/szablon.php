@@ -94,6 +94,9 @@ else :
 <section class="gk-wc"><div class="wrap">
   <span class="pisane"><?php echo esc_html( $pis ); ?></span>
   <h1><?php the_title(); ?></h1>
+  <?php if ( is_checkout() && ! ( function_exists( 'is_order_received_page' ) && is_order_received_page() ) ) : ?>
+  <p class="gk-edytuj"><a href="<?php echo esc_url( wc_get_cart_url() ); ?>">← Zmień lub usuń produkty w koszyku</a></p>
+  <?php endif; ?>
   <div class="gk-wc-karta"><?php the_content(); ?></div>
   <?php if ( is_cart() && function_exists( 'WC' ) && WC()->cart && WC()->cart->is_empty() ) : ?>
   <p class="gk-pusty"><a class="btn" href="<?php echo esc_url( home_url( '/materialy/' ) ); ?>">Zobacz materiały</a></p>
