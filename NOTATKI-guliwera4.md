@@ -47,6 +47,13 @@ E-mail na stronie: kontakt@guliwera4.pl
   - okładki produktów jako obrazki w koszyku;
   - PDF „budżet marketingowy”.
 
+## Aplikacja Akademia Guliwera (gałąź `claude/aplikacja-lekcje`)
+- Kod: `aplikacja/` (React + Vite, PWA). Treść lekcji: `aplikacja/src/content/kurs.ts`. Maskotka: Lilek.
+- Na stronie: wtyczka `guliwera-akademia` (wersja 1.1, aktywna) serwuje aplikację pod https://guliwera4.pl/akademia/.
+  Aktualizacja: `aplikacja/pakuj-wtyczke.sh` → commit `wtyczki/guliwera-akademia.zip` → wgrać ZIP z GitHub raw (hash commita, overwrite).
+- Strona 112 „Aplikacja” (https://guliwera4.pl/aplikacja/): opis, instrukcja instalacji, kod QR. W menu pozostałych stron jeszcze nie ma linku.
+- Sklepy: Google Play przez TWA (PWABuilder), wymaga konta Google Play Console i pliku /.well-known/assetlinks.json; App Store wymaga konta Apple Developer i Maca.
+
 ## Następny projekt
 Aplikacja do nauki dla młodych managerów: krótkie codzienne lekcje, seria dni, punkty, poziomy.
 Wiedza z publicznie opisanych frameworków strategii i zarządzania (np. macierz BCG, 7S, MECE, piramida Minto).
