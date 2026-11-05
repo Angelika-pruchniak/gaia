@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Guliwera – Akademia (aplikacja)
  * Description: Udostępnia aplikację Akademia Guliwera pod adresem guliwera4.pl/akademia/ (aplikacja na telefon do zainstalowania z przeglądarki). Zostaw włączoną.
- * Version: 1.0
+ * Version: 1.1
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
