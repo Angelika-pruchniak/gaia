@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App'
 import { primeAudio } from './fx'
+import './install'
 import './styles.css'
 
 primeAudio()

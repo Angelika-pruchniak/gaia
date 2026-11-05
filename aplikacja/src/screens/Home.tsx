@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { flatLessons, units } from '../content'
+import { InstallCard } from '../components/InstallCard'
 import { Lilek } from '../components/Lilek'
 import { Progress, Star } from '../components/ui'
 import { fx } from '../fx'
@@ -25,6 +26,7 @@ export function Home({ onLesson, onSkip, onChest }: Props) {
 
   return (
     <div className="home">
+      <InstallCard />
       <div className="goal-card">
         <Lilek mood={todayXp >= s.dailyGoal ? 'cheer' : 'happy'} size={54} />
         <div className="goal-text">
