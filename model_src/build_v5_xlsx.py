@@ -81,23 +81,23 @@ inp("inc", "Inkrementalna marża z danych rolników", [0, 0.005, 0.007, 0.009, 0
 inp("sfee", "Opłata za sukces: część dodatkowej marży GA wpłacana do puli", 0.25, "%", "GA płaci tylko od zysku, którego bez platformy by nie miała", "0%")
 inp("gaint", "Koszt wewnętrzny GA (opiekun, dane, ARiMR)", 300000, "zł/rok", "GA nie wnosi gotówki do puli", "#,##0")
 sec("5. Koszty platformy (model GA, sekcja Koszty)")
-inp("dev", "Rozwój platformy po starcie", [3000000, 3000000, 4000000, 4000000, 5000000, 5000000, 5000000], "zł/rok", "Model GA, nagłówek wiersza 64: 3-5 mln zł (wartości 1,5-3 mln zł GA sama opisuje jako optymistyczne)", "#,##0")
+inp("dev", "Rozwój platformy po starcie", [1500000, 2000000, 2000000, 3000000, 3000000, 3000000, 3000000], "zł/rok", "Model GA, wiersz 64. Rozwój poza zespołem; programiści zespołu (IT + produkt) są w wierszu Zespół, więc 3-5 mln zł liczyłoby ich podwójnie", "#,##0")
 inp("m0", "Utrzymanie: część stała", 1200000, "zł/rok", "Dopasowane do modelu GA (2,4 → 12 mln zł)", "#,##0")
 inp("mu", "Utrzymanie: na użytkownika", 36, "zł/rok", "Model GA: 12 mln zł / 297,5 tys. w roku 5 ≈ 40 zł", "0")
 inp("f0", "Zespół: część stała", 10, "FTE", "Dopasowane do modelu GA (15 → 80 FTE)", "0")
 inp("fu", "Zespół: na każde 1000 użytkowników", 0.2, "FTE", "Model GA: 70 FTE przy 297,5 tys.", "0.00")
-inp("fc", "Średni miesięczny koszt FTE (pełny koszt partnera)", 30000, "zł", "Model GA: 25 tys. zł (wynagrodzenie); + 20% narzutu software house'u (biuro, sprzęt, licencje, zarząd, bench)", "#,##0")
+inp("fc", "Średni miesięczny koszt FTE (pełny koszt partnera)", 25000, "zł", "Model GA, B78. Średnia dla zespołu IT + produkt + obsługa klienta + zakupy (obsługa i zakupy 10-15 tys. zł, senior IT 30-35 tys. zł)", "#,##0")
 inp("cac", "CAC na nowego użytkownika (GŁÓWNE ZAŁOŻENIE)", [250, 250, 300, 300, 350, 350, 350], "zł", "Model GA, wiersz 69: 250 → 350 zł (CAC krańcowy rośnie ze skalą). Bez synergii", "#,##0")
 inp("churn", "Churn użytkowników", 0.15, "%", "Model GA, B72", "0%")
 inp("ach", "Koszt antichurn na odchodzącego użytkownika", 350, "zł", "Model GA, B74", "#,##0")
-sec("5b. Koszty pominięte w modelu GA (doszacowanie 05.11)")
-inp("mvr", "MVP1: pełny koszt osobomiesiąca partnera", 30000, "zł", "Było 20 tys. zł; pełny koszt seniora w SH (stawka sprzedażowa 35-45 tys. zł)", "#,##0")
-inp("mvo", "MVP1: analiza, UX, QA, kierowanie projektem (narzut na programowanie)", 0.40, "%", "Moduły to samo programowanie (ok. 60% pracy projektu IT)", "0%")
-inp("mvk", "MVP1: rezerwa na ryzyko wyceny", 0.20, "%", "Wycena przed odpowiedziami na PZ-01…49 (praktyka: +20-30%)", "0%")
-inp("ccom", "Komunikacja: SMS, WhatsApp, e-mail (Alert 6:30)", 12, "zł/użytk./rok", "ok. 100 dni sezonu × 1 wiadomość × 0,07-0,12 zł", "0")
-inp("csec", "Bezpieczeństwo i zgodność: SOC/SIEM, pentesty, audyt RODO / ISO 27001, ubezpieczenie cyber", 1200000, "zł/rok", "OPZ: SIEM, pentest, RPO 4 h / RTO 8 h", "#,##0")
-inp("cpay", "Płatności i ryzyko transakcyjne (od roku 2)", 0.0015, "% GMV", "ok. 15% GMV opłacane online × 1% prowizji operatora", "0.00%")
-inp("cgov", "Prawne, PMO, audyt puli, depozyt kodu", 800000, "zł/rok", "Umowa partnerska, Komitet Sterujący, audyt roczny kosztów puli", "#,##0")
+sec("5b. Koszty spoza modelu GA (weryfikacja 05.11)")
+inp("mvr", "MVP1: pełny koszt osobomiesiąca partnera", 25000, "zł", "Koszt (nie stawka sprzedażowa): średnia zespołu projektowego, jak FTE w modelu GA. Było 20 tys. zł", "#,##0")
+inp("mvo", "MVP1: analiza, QA, kierowanie projektem (narzut na moduły)", 0.20, "%", "Moduły obejmują już UX i infrastrukturę, a osobna pozycja: wdrożenie 12 osobomies.; razem ok. 26% na QA i PM", "0%")
+inp("mvk", "MVP1: rezerwa na ryzyko wyceny", 0, "%", "Ryzyko, nie koszt oczekiwany: 0% w bazie, 20-30% w teście odporności", "0%")
+inp("ccom", "Komunikacja ponad utrzymanie: SMS, WhatsApp", 0, "zł/użytk./rok", "W bazie 0: zawarte w utrzymaniu (usługi obce, 36 zł/użytk.); push i e-mail prawie bez kosztu, SMS ok. 0,08 zł", "0")
+inp("csec", "Bezpieczeństwo i zgodność ponad utrzymanie: SOC, pentesty, audyty, ubezpieczenie cyber", 500000, "zł/rok", "OPZ: SIEM, pentest; SOC jako usługa ok. 0,3 mln zł + pentest i audyty ok. 0,1 mln zł + ubezpieczenie ok. 0,1 mln zł", "#,##0")
+inp("cpay", "Płatności i ryzyko transakcyjne (od roku 2)", 0, "% GMV", "W bazie 0: rolnik płaci dystrybutorowi fakturą; przy płatnościach online opłata operatora wchodzi w prowizję sprzedawcy", "0.00%")
+inp("cgov", "Prawne, PMO, audyt puli, depozyt kodu", 300000, "zł/rok", "Audyt puli ok. 0,1 mln zł, prawnicy i depozyt kodu ok. 0,2 mln zł; PMO w zespole", "#,##0")
 sec("6. Synergie partnerstwa (DO DYSKUSJI: co partnerzy już mają i za co już płacą)")
 inp("syt", "Mniejszy zespół: istniejące zespoły partnerów, dystrybutorzy GA odpowiadają na zapytania", 0, "%", "W bazie 0%. Potencjał do 30% (istniejące zespoły PT i PM) - do potwierdzenia ofertą", "0%")
 inp("sym", "Niższe utrzymanie: platforma PT współdzielona (multi-tenant)", 0, "%", "W bazie 0%. Potencjał do 25% (multi-tenant PT) - do potwierdzenia ofertą", "0%")
@@ -143,7 +143,7 @@ kref = lambda key, p: f"'Klucz podziału'!${'BCD'[p]}${KR[key]}"
 # ======================= DOPASOWANIE MVP1 =======================
 C = wb.create_sheet("Dopasowanie MVP1")
 C["A1"] = "Dopasowanie wymagań MVP1 (OPZ, 01.06.2026) do platform partnerów: kto dostarcza i ile pracy w roku 0"
-C["A2"] = "Osobomiesiące programowania to założenie do potwierdzenia odpowiedziami SH na PZ-01…PZ-49. Koszt = osobomiesiące × 30 tys. zł × (1 + 40% analiza/UX/QA/PM) × (1 + 20% rezerwy)."
+C["A2"] = "Osobomiesiące to założenie do potwierdzenia odpowiedziami SH na PZ-01…PZ-49. Koszt = osobomiesiące × 25 tys. zł × (1 + 20% analiza/QA/PM) × (1 + rezerwa, w bazie 0%)."
 hdr(C, 4, ["ID", "Moduł MVP1", "Kto dostarcza", "Dopasowanie", "GA wnosi", "Osobo-\nmiesiące", "Koszt\nmln zł"])
 PT_, PM_ = "Partner Technologiczny", "Partner Marketplace"
 mvp = [("WB-01", "Rejestracja i onboarding", PT_, "standard w silniku", "", 2), ("WB-02", "Logowanie, MFA, Entra ID dla pracowników GA", PT_, "konfiguracja", "Entra ID GA", 4),
