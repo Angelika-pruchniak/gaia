@@ -25,7 +25,7 @@ def line_chart(sl, x, y, w, h, cats, series, colors):
     return ch
 
 # ===== 1. Kto, kiedy, ile =====
-sl = frame("Każdy partner zarabia: GA od 2030, partnerzy od 2033", "Gotówka 2027-2034, mln zł. Warunki: pula płaci za pracę (koszt + 10%), deficyt finansują PT 45% / PM 55%, GA 0 zł")
+sl = frame("Każdy zarabia: GA od 2030, partnerzy od 2033", "Gotówka 2027-2034, mln zł. Warunki: pula płaci za pracę (koszt + 10%), deficyt finansują PT 45% / PM 55%, GA 0 zł")
 data = [["", "Wnosi", "Jak zarabia", "Na plusie od", "Suma 8 lat", "IRR", "Maks. zaangażowanie"]]
 rows_ = [("Partner Technologiczny", "PT", "Silnik, UX, integracje; MVP1 4,8 mln zł", "Marża 10% na pracy + zwrot finansowania + ok. 36% zysku"),
          ("Partner Marketplace", "PM", "Marketplace (plug-in); MVP1 0,9 mln zł", "Marża 10% + zwrot finansowania + ok. 42% zysku"),
@@ -64,7 +64,7 @@ msg(sl, [("Kluczowe założenie: ", True, WHITE), ("udział w wydatkach 19%. GA 
 
 # ===== 3. Koszty, churn, CAC =====
 c = D["costs"]; s8 = lambda k: sum(c[k][1:8]); y5 = lambda k: c[k][5]
-sl = frame("Koszty: zgodne z P&L GA, największa pozycja to pozyskanie rolników", "Koszty puli 2028-2033: 300,6 mln zł vs 293,1 mln zł w P&L GA (+2,6%). Plus MVP1 5,6 mln zł w 2027 (GA: 4 mln zł)")
+sl = frame("Koszty zgodne z P&L GA (+2,6%)", "Koszty puli 2028-2033: 300,6 mln zł vs 293,1 mln zł w P&L GA (+2,6%). Plus MVP1 5,6 mln zł w 2027 (GA: 4 mln zł)")
 data = [["Koszt", "Jak liczony", "Źródło", "2032", "Suma 8 lat"],
         ["Pozyskanie (CAC)", "nowi użytkownicy × 250 → 350 zł", "GA w.69", f1(y5("Pozyskanie użytkowników (CAC)")), f1(s8("Pozyskanie użytkowników (CAC)"))],
         ["Churn (antichurn)", "15% użytk. × 350 zł = 52,5 zł/użytk./rok", "GA B72-B74", f1(y5("Antichurn")), f1(s8("Antichurn"))],
@@ -83,7 +83,7 @@ tb(sl, 9.32, 1.32, 3.3, 4.6, [[("Churn: dlaczego 15%?", True, NAVY)], [("Model G
 msg(sl, [("Weryfikacja 05.11: ", True, WHITE), ("odrzuciłem doszacowanie, które liczyło SMS, programistów i płatności podwójnie. Zostało +1,9 mln zł na MVP1 i 0,8 mln zł/rok.", False, WHITE)], y=6.3)
 
 # ===== 4. Premium =====
-sl = frame("Premium 20 zł/ha: rolnik płaci ok. 23% dopłaty, którą dzięki niemu dostaje", "Model GA zakładał 40 zł/ha (≈ 659 zł/rok); przyjęliśmy połowę. Premium to tylko 6% przychodów puli")
+sl = frame("Premium 20 zł/ha: 23% wartości dopłaty", "Model GA zakładał 40 zł/ha (≈ 659 zł/rok); przyjęliśmy połowę. Premium to tylko 6% przychodów puli")
 cols = [("Co rolnik dostaje w premium", NAVY, ["Plan nawożenia z AI dla każdego pola (wymóg ekoschematu)", "Mapy NDVI z Sentinel, strefy plonowania na paszporcie pola", "Alerty agronomiczne i pogodowe z rekomendacją", "Porównanie ofert i kalkulator opłacalności", "Raport śladu węglowego dla przetwórców"]),
         ("Bezpłatnie (dla wszystkich)", MBLUE, ["Paszport pola z danymi ARiMR / GUGiK", "Zapytanie ofertowe do dystrybutorów", "Alert 6:30: ceny, pogoda", "Baza wiedzy nawozy.eu, harmonogram dotacji", "Kokpit, dokumenty, profil"])]
 for i, (t, col, items) in enumerate(cols):
@@ -99,7 +99,7 @@ tb(sl, 0.6, 4.6, 7.8, 1.5, [[("Dlaczego 20 zł/ha, a nie 40 zł/ha: ", True, NAV
 msg(sl, [("Jeśli premium nie zadziała: ", True, WHITE), ("wynik partnerów spada o ok. 6% przychodów; model stoi na prowizjach i back marginie.", False, WHITE)], y=6.3)
 
 # ===== 5. Ryzyka =====
-sl = frame("Co musi się sprawdzić: udział w wydatkach to ryzyko krytyczne", "Suma gotówki 2027-2034, mln zł. Pełne przeliczenie modelu dla każdego wariantu")
+sl = frame("Ryzyko krytyczne: udział w wydatkach", "Suma gotówki 2027-2034, mln zł. Pełne przeliczenie modelu dla każdego wariantu")
 S = [("Bazowy (warunki proponowane)", "deal"), ("Warunki z modelu GA (po koszcie, PT 70% deficytu)", "base"), ("Ambicja 20% rolników (zamiast 35%)", "deal_adopt20"),
      ("CAC +100 zł", "deal_cac100"), ("Udział w wydatkach −30%", "deal_wal70"), ("Synergie potwierdzone ofertami (potencjał)", "deal_syn")]
 data = [["Wariant", "PT", "PM", "GA", "Zwrot PT", "Finansowanie puli"]]
